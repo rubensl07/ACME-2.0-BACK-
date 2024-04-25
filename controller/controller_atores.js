@@ -1,5 +1,8 @@
 const message = require('../config.js')
 const DAO = require('../model/DAO/atores.js')
+const sexosDAO = require('../model/DAO/sexos.js')
+const nacionalidadesDAO = require('../model/DAO/nacionalidades.js')
+
 
 const setInserirnovoAtor = async function (dadosAtor, contentType) {
     try {
@@ -64,11 +67,30 @@ const setAtualizarAtor = async function (id, dadosAtor, contentType) {
     }
 }
 const getListarAtores = async function () {
-    let atoresJSON = {};
     let dadosAtores = await DAO.selectAllAtores();
+    const dadosSexos = await sexosDAO.selectAllSexos();
+    
+    let atoresJSON = {};
         if (dadosAtores) {
         if(dadosAtores.length > 0) {
-            atoresJSON.classificoesIndicativas = dadosAtores;
+            for (let index = 0; index < dadosAtores.length; index++) {
+                const ator = dadosAtores[index];
+                const dadosNacionalidadesAtor = await nacionalidadesDAO.selectAllNacionalidadesAtor(ator.id)
+                let nacionalidade = []
+                dadosNacionalidadesAtor.forEach(nacionalidadeAtor => {
+                    nacionalidade.push(nacionalidadeAtor.pais)
+                });
+                ator.nacionalidade = nacionalidade
+                const idSexo = ator.id_sexo
+
+                dadosSexos.forEach(sexo => {
+                    if(idSexo==sexo.id){
+                        ator.sexo = sexo
+                        delete ator.id_sexo
+                    }
+                })
+            }
+            atoresJSON.Atores = dadosAtores;
             atoresJSON.quantidade = dadosAtores.length;
             atoresJSON.status_code = 200;
             return atoresJSON;
@@ -80,13 +102,30 @@ const getListarAtores = async function () {
     }
 }
 const getBuscarAtorId = async function (search) {
+    let dadosAtor = await DAO.selectByIdAtor(search);
+    const dadosSexos = await sexosDAO.selectAllSexos();
+
     let atorJSON = {};
     if (search == '' || search == undefined || isNaN(search)) {
         return message.ERROR_INVALID_ID; //400
     } else {
-        let dadosAtor = await DAO.selectByIdAtor(search);
         if (dadosAtor) {
             if (dadosAtor.length > 0) {
+                    const ator = dadosAtor[0];
+                    const dadosNacionalidadesAtor = await nacionalidadesDAO.selectAllNacionalidadesAtor(ator.id)
+                    let nacionalidade = []
+                    dadosNacionalidadesAtor.forEach(nacionalidadeAtor => {
+                        nacionalidade.push(nacionalidadeAtor.pais)
+                    });
+                    ator.nacionalidade = nacionalidade
+                    const idSexo = ator.id_sexo
+    
+                    dadosSexos.forEach(sexo => {
+                        if(idSexo==sexo.id){
+                            ator.sexo = sexo
+                            delete ator.id_sexo
+                        }
+                    })
                 atorJSON.ator = dadosAtor;
                 atorJSON.status_code = 200;
                 return atorJSON;

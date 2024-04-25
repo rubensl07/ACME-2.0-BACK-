@@ -1,5 +1,8 @@
 const message = require('../config.js')
 const DAO = require('../model/DAO/diretores.js')
+const sexosDAO = require('../model/DAO/sexos.js')
+const nacionalidadesDAO = require('../model/DAO/nacionalidades.js')
+
 
 const setInserirNovoDiretor = async function (dadosDiretor, contentType) {
     try {
@@ -64,11 +67,30 @@ const setAtualizarDiretor = async function (id, dadosDiretor, contentType) {
     }
 }
 const getListarDiretores = async function () {
-    let diretoresJSON = {};
     let dadosDiretores = await DAO.selectAllDiretores();
+    const dadosSexos = await sexosDAO.selectAllSexos();
+    
+    let diretoresJSON = {};
         if (dadosDiretores) {
         if(dadosDiretores.length > 0) {
-            diretoresJSON.classificoesIndicativas = dadosDiretores;
+            for (let index = 0; index < dadosDiretores.length; index++) {
+                const diretor = dadosDiretores[index];
+                const dadosNacionalidadesDiretor = await nacionalidadesDAO.selectAllNacionalidadesDiretor(diretor.id)
+                let nacionalidade = []
+                dadosNacionalidadesDiretor.forEach(nacionalidadeDiretor => {
+                    nacionalidade.push(nacionalidadeDiretor.pais)
+                });
+                diretor.nacionalidade = nacionalidade
+                const idSexo = diretor.id_sexo
+
+                dadosSexos.forEach(sexo => {
+                    if(idSexo==sexo.id){
+                        diretor.sexo = sexo
+                        delete diretor.id_sexo
+                    }
+                })
+            }
+            diretoresJSON.diretores = dadosDiretores;
             diretoresJSON.quantidade = dadosDiretores.length;
             diretoresJSON.status_code = 200;
             return diretoresJSON;
@@ -80,13 +102,30 @@ const getListarDiretores = async function () {
     }
 }
 const getBuscarDiretorId = async function (search) {
+    let dadosDiretor = await DAO.selectByIdDiretor(search);
+    const dadosSexos = await sexosDAO.selectAllSexos();
+
     let diretorJSON = {};
     if (search == '' || search == undefined || isNaN(search)) {
         return message.ERROR_INVALID_ID; //400
     } else {
-        let dadosDiretor = await DAO.selectByIdDiretor(search);
         if (dadosDiretor) {
             if (dadosDiretor.length > 0) {
+                    const diretor = dadosDiretor[0];
+                    const dadosNacionalidadesDiretor = await nacionalidadesDAO.selectAllNacionalidadesDiretor(diretor.id)
+                    let nacionalidade = []
+                    dadosNacionalidadesDiretor.forEach(nacionalidadeDiretor => {
+                        nacionalidade.push(nacionalidadeDiretor.pais)
+                    });
+                    diretor.nacionalidade = nacionalidade
+                    const idSexo = diretor.id_sexo
+    
+                    dadosSexos.forEach(sexo => {
+                        if(idSexo==sexo.id){
+                            diretor.sexo = sexo
+                            delete diretor.id_sexo
+                        }
+                    })
                 diretorJSON.diretor = dadosDiretor;
                 diretorJSON.status_code = 200;
                 return diretorJSON;

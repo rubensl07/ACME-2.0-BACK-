@@ -53,7 +53,24 @@ const selectByIdNacionalidade = async function (search) {
         return false
     }
 }
-
+const selectAllNacionalidadesAtor = async function (idAtor) {
+    try {
+        const sql = `SELECT * FROM ator_nacionalidade JOIN Nacionalidades ON ator_nacionalidade.id_nacionalidade = Nacionalidades.id WHERE id_ator = ${idAtor}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result;
+    } catch (error) {
+        return false
+    }
+}
+const selectAllNacionalidadesDiretor = async function (idDiretor) {
+    try {
+        const sql = `SELECT * FROM diretor_nacionalidade JOIN Nacionalidades ON diretor_nacionalidade.id_nacionalidade = Nacionalidades.id WHERE id_diretor = ${idDiretor}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result;
+    } catch (error) {
+        return false
+    }
+}
 
 module.exports = {
     insertNacionalidade,
@@ -61,4 +78,6 @@ module.exports = {
     pegarUltimoId,
     selectAllNacionalidades,
     selectByIdNacionalidade,
+    selectAllNacionalidadesAtor,
+    selectAllNacionalidadesDiretor
 }

@@ -43,14 +43,12 @@ const setInserirNovoFilme = async function (dadosFilme, contentType) {
             let id = await DAO.pegarUltimoId()
 
             if(novoFilme && id) {
-
-                const idPego = id[0].id
                 //retorno dos dados
                 novoFilmeJSON.filme = dadosFilme
                 novoFilmeJSON.status = message.SUCESS_CREATED_ITEM.status
                 novoFilmeJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
                 novoFilmeJSON.message = message.SUCESS_CREATED_ITEM.message
-                novoFilmeJSON.id = 'ID adicionado: '+idPego
+                novoFilmeJSON.id = 'ID adicionado: '+id[0].id
 
                 return novoFilmeJSON //201
             } else {
@@ -138,6 +136,8 @@ const getListarFilmes = async function () {
     let dadosFilmes = await DAO.selectAllFilmes();
         if (dadosFilmes) {
         if(dadosFilmes.length > 0) {
+            dadosFilmes.generos = 'oi'
+            dadosFilmes.diretores = []
             filmesJSON.filmes = dadosFilmes;
             filmesJSON.quantidade = dadosFilmes.length;
             filmesJSON.status_code = 200;

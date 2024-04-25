@@ -223,48 +223,112 @@ CREATE TABLE Diretores(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
     nascimento DATE NOT NULL,
+    falecimento DATE,
     foto VARCHAR(200) NOT NULL,
     id_sexo INT NOT NULL,
     CONSTRAINT SexoDiretor FOREIGN KEY (id_sexo) REFERENCES Sexos(id)
     
 );
-INSERT INTO Diretores(nome, nascimento,foto,id_sexo)VALUES
+INSERT INTO Diretores(nome, nascimento,falecimento,foto,id_sexo)VALUES
 (
 'Quentin Tarantino',
 '1963-03-27',
+null,
 'https://br.web.img3.acsta.net/c_310_420/pictures/19/03/19/17/22/2985063.jpg',
 1
 ),
 (
 	'Joe Russo',
 	'1971-07-08',
+    null,
 	'https://br.web.img2.acsta.net/c_310_420/pictures/15/11/24/17/01/231901.jpg',
     1
 ),
 (
 	'Anthony Russo',
 	'1970-02-03',
+    null,
 	'https://br.web.img2.acsta.net/c_310_420/pictures/15/11/24/16/59/250993.jpg',
     1
+),
+(
+	'Dennis Dugan',
+	'1946-09-05',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/14/01/15/19/07/112586.jpg',
+    1
+),
+(
+	'Sergio Pablos',
+	'1970-01-01',
+    null,
+	'https://static.wikia.nocookie.net/disney/images/9/91/Sergio_Pablos.webp/revision/latest?cb=20211109044038',
+    1
+),
+(
+	'David Fincher',
+	'1946-08-28',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/medias/nmedia/18/64/19/48/19965756.jpg',
+    1
+),
+(
+	'Mark Steven Johnson',
+    '1964-10-30',
+    null,
+    'https://br.web.img3.acsta.net/c_310_420/pictures/15/05/27/21/15/457245.jpg',
+    1
+),
+(
+	'Peter Jackson',
+	'1961-10-31',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/medias/nmedia/18/92/91/45/20224862.jpg',
+    1
+),
+(
+	'Shawn Levy',
+	'1968-07-23',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/06/10/18/29/294598.jpg',
+    1
+),
+(
+	'Tetsurô Araki',
+	'1976-11-05',
+    null,
+	'https://images.static-bluray.com/products/22/41785_1_large.jpg',
+    1
+),
+(
+	'Keenen Ivory Wayans',
+	'1958-06-08',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/05/28/20/24/237848.jpg',
+    1
 );
+
 CREATE TABLE Atores(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
     nascimento DATE NOT NULL,
+    falecimento DATE,
     foto VARCHAR(200) NOT NULL,
     id_sexo INT NOT NULL,
 	CONSTRAINT SexoAtor FOREIGN KEY (id_sexo) REFERENCES Sexos(id)
 );
-INSERT INTO Atores(nome, nascimento,foto,id_sexo)VALUES
+INSERT INTO Atores(nome, nascimento,falecimento,foto,id_sexo)VALUES
 (
 'Robert Downey Jr.',
 '1965-04-04',
+null,
 'https://br.web.img3.acsta.net/c_310_420/pictures/18/06/29/00/35/0101925.jpg',
 1
 ),
 (
 	'Erin Moriarty',
 	'1994-06-24',
+    null,
 	'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/968059_v9_bb.jpg',
     2
 );
@@ -279,7 +343,9 @@ CONSTRAINT NacionalidadeDoDiretor_nacionalidade FOREIGN KEY (id_nacionalidade) R
 INSERT INTO diretor_nacionalidade(id_diretor,id_nacionalidade)VALUES
 (1,63),
 (2,63),
-(3,63);
+(3,63),
+(1,64),
+(3,55);
 
 CREATE TABLE ator_nacionalidade(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -483,6 +549,17 @@ INSERT INTO Filmes(nome,sinopse,duracao,data_lancamento,data_relancamento,foto_c
     'https://sm.ign.com/ign_br/screenshot/default/blob_v2xz.jpg',
     '#ffb5a5',
     3
+),
+(
+	"Vingadores: Ultimato",
+	"Em Vingadores: Ultimato, após Thanos eliminar metade das criaturas vivas em Vingadores: Guerra Infinita, os heróis precisam lidar com a dor da perda de amigos e seus entes queridos. Com Tony Stark (Robert Downey Jr.) vagando perdido no espaço sem água nem comida, o Capitão América/Steve Rogers (Chris Evans) e a Viúva Negra/Natasha Romanov (Scarlett Johansson) precisam liderar a resistência contra o titã louco.",
+    '03:01:00',
+    '2019-04-25',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/04/26/17/30/2428965.jpg',
+    'https://assets.b9.com.br/wp-content/uploads/2019/06/EBC2000_v829.1233-1280x720.jpg',
+    '#563f8c',
+    3
 );
 
 
@@ -501,6 +578,18 @@ id_diretor INT NOT NULL,
 CONSTRAINT FilmeDiretor_Filme FOREIGN KEY (id_filme) REFERENCES Filmes(id),
 CONSTRAINT FilmeDiretor_Diretor FOREIGN KEY (id_diretor) REFERENCES Diretores(id)
 );
+INSERT into diretor_filme (id_filme, id_diretor) VALUES 
+(1,4),
+(2,5),
+(3,1),
+(4,6),
+(5,7),
+(6,8),
+(7,9),
+(8,10),
+(9,11),
+(10,2),
+(10,3);
 
 CREATE TABLE filme_genero(	
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY, 
@@ -610,8 +699,7 @@ INSERT INTO Favoritos(id_usuario,id_filme) VALUES
 
 
 
-SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, Generos.nome AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id WHERE Filmes.id_classificacao_indicativa<=3 AND Generos.id = 10 OR Generos.id = 2 OR Generos.id = 3 AND Filmes.data_lancamento > '2012-01-01' AND Filmes.data_lancamento < '2021-01-01' AND (Filmes.nome OR Filmes.sinopse LIKE '%moto%');
-### TESTES DE FILTRAGEM
+	### TESTES DE FILTRAGEM
 # Sem filtro
 SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, Generos.nome AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id;
 
@@ -637,7 +725,7 @@ SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,f
 
 # Todos os filtros
 SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, Generos.nome AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id WHERE 
-(Filmes.id_classificacao_indicativa<=5) AND (Filmes.data_lancamento >= '2000-01-01' AND Filmes.data_lancamento <= '2020-01-01') AND (Generos.id = 2 OR Generos.id = 4 OR Generos.id = 5)
+(Filmes.id_classificacao_indicativa<=5) AND (Filmes.data_lancamento >= '0001-01-01' AND Filmes.data_lancamento <= '9999-12-31') AND (Generos.id = 2 OR Generos.id = 4 OR Generos.id = 5)
 ORDER BY Filmes.id; 
 
 # PEGA APENAS FILMES COM CLASSIFICAÇÃO INDICATIVA IGUAL A 10/12 ANOS, COM DURAÇÃO INFERIOR A 1:50h, E QUE POSSUA DATA DE RELANÇAMENTO
@@ -676,9 +764,17 @@ SELECT * FROM Filmes;
 SELECT * FROM filme_genero;
 SELECT * FROM diretor_nacionalidade;
 SELECT * FROM diretor_filme;
+
 SELECT * FROM Atores;
 SELECT * FROM ator_nacionalidade;
 SELECT * FROM ator_filme;
 SELECT * FROM Usuarios;
 SELECT * FROM Favoritos;
 SELECT * FROM Favoritos WHERE Favoritos.id = 1;
+
+SELECT Filmes.nome,Diretores.nome FROM Filmes JOIN diretor_filme ON Filmes.id = diretor_filme.id_filme JOIN Diretores ON diretor_filme.id_diretor = Diretores.id;
+
+SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, (SELECT GROUP_CONCAT(Generos.nome SEPARATOR ', ') FROM filme_genero INNER JOIN Generos ON filme_genero.id_genero = Generos.id WHERE filme_genero.id_filme = Filmes.id) AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id
+            WHERE (Filmes.nome LIKE '%%' OR Filmes.sinopse LIKE '%%') AND (Filmes.id_classificacao_indicativa<=6) AND (Filmes.data_lancamento>='0001-01-01' AND Filmes.data_lancamento<='9999-12-31') AND (Generos.id IN (6)) GROUP BY Filmes.id;
+
+
