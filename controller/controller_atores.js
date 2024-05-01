@@ -135,6 +135,27 @@ const getBuscarAtorId = async function (search) {
         } else {
             return message.ERROR_INTERNAL_SERVER_DB //500
         }
+    }
+}
+
+
+const getExibirAtoresFilme = async function(search){
+    let atoresJSON = {};
+    if (search == '' || search == undefined || isNaN(search)) {
+        return message.ERROR_INVALID_ID; //400
+    } else {
+        let dadosAtores = await DAO.selectByIdFilme(search);
+        if (dadosAtores) {
+            if (dadosAtores.length > 0) {
+                atoresJSON.atores = dadosAtores;
+                atoresJSON.status_code = 200;
+                return atoresJSON;
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_DB //500
+        }
 
     }
 }
@@ -143,5 +164,6 @@ module.exports = {
     setInserirnovoAtor,
     setAtualizarAtor,
     getListarAtores,
-    getBuscarAtorId
+    getBuscarAtorId,
+    getExibirAtoresFilme
 }

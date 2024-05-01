@@ -70,6 +70,41 @@ const selectByIdGenero = async function (search) {
         return false
     }
 }
+const selectByIdFilme = async function (search) {
+    try {
+        const sql = `SELECT filme_genero.id AS id_conexao,Generos.id,Generos.nome FROM Generos JOIN filme_genero ON Generos.id = filme_genero.id_genero WHERE id_filme = ${search}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result
+    } catch (error) {
+        return false
+    }
+}
+const deleteGeneroFilme = async function (search) {
+    try {
+        const sql = ` DELETE From filme_genero WHERE filme_genero.id = ${search}`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+const insertGeneroFilme = async function(dados){
+    try {
+        const sql = ` INSERT INTO filme_genero(id_filme,id_genero)VALUES(${dados.idFilme},${dados.idGenero})`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
 
 module.exports = {
     insertGenero,
@@ -77,4 +112,7 @@ module.exports = {
     pegarUltimoId,
     selectAllGeneros,
     selectByIdGenero,
+    selectByIdFilme,
+    deleteGeneroFilme,
+    insertGeneroFilme,
 }

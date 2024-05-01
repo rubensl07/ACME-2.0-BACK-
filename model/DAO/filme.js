@@ -156,7 +156,7 @@ const selectAllFilmesSort = async function (sort) {
 
 const selectByIdFilme = async function (search) {
     try {
-        const sql = `SELECT Filmes.id,nome,sinopse,duracao,data_lancamento,foto_capa,foto_fundo,cor,Classificacao_indicativa.idade AS classificacao FROM Filmes JOIN Classificacao_indicativa ON Filmes.id_classificacao_indicativa = Classificacao_indicativa.id WHERE Filmes.id = ${search}`;
+        const sql = `SELECT * From Filmes WHERE id = ${search}`;
         // const sql = `SELECT * FROM Filmes WHERE id = ${search}`;
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
         return rsFilmes
@@ -192,5 +192,5 @@ module.exports = {
  selectByIdFilme,
  selectPesquisarFilmes,
  selectFilterFilmes,
- selectAllFilmesSort
+ selectAllFilmesSort,
 }

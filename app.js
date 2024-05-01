@@ -149,6 +149,23 @@ app.post('/acmefilmes/genero', cors(), bodyParserJSON,async function(request,res
     response.status(resultDadosNovoGenero.status_code)
     response.json(resultDadosNovoGenero)
 })
+app.post('/acmefilmes/generofilme', cors(), bodyParserJSON,async function(request,response){
+
+    let contentType = request.headers['content-type'];
+    let dadosBody = request.body;
+
+    let resultDadosNovaConexao = await controllerGeneros.setInserirGeneroFilme(dadosBody,contentType)
+    response.status(resultDadosNovaConexao.status_code)
+    response.json(resultDadosNovaConexao)
+})
+app.delete('/acmefilmes/generofilme/:id', cors(), async function(request,response){
+
+    let generoFilmeId = request.params.id
+    let resultDadosExcluirGeneroFilme = await controllerGeneros.setExcluirGeneroFilme(generoFilmeId)
+
+    response.status(resultDadosExcluirGeneroFilme.status_code)
+    response.json(resultDadosExcluirGeneroFilme)
+})
 app.put('/acmefilmes/genero/:id', cors(), bodyParserJSON,async function(request,response){
     let contentType = request.headers['content-type'];
     let dadosBody = request.body;
@@ -157,7 +174,13 @@ app.put('/acmefilmes/genero/:id', cors(), bodyParserJSON,async function(request,
     let resultDadosUpdateUsuario = await controllerGeneros.setAtualizarGenero(generoId, dadosBody, contentType)
     response.json(resultDadosUpdateUsuario)
 })
+app.get('/acmefilmes/generosfilme/:id', cors(), async function(request, response,){
+    let filmeId = request.params.id
 
+    let dadosGenero = await controllerGeneros.getListarGenerosFilme(filmeId);
+    response.status(dadosGenero.status_code)
+    response.json(dadosGenero)
+})
 /** CRUD - NACIONALIDADES **/
 app.post('/acmefilmes/nacionalidade', cors(), bodyParserJSON, async function(request, response) {
     let contentType = request.headers['content-type'];
@@ -261,7 +284,13 @@ app.get('/acmefilmes/diretor/:id', cors(), async function(request, response) {
     response.status(dadosDiretor.status_code);
     response.json(dadosDiretor);
 });
+app.get('/acmefilmes/diretorfilme/:id', cors(), async function(request, response,){
+    let filmeId = request.params.id
 
+    let dadosDiretores = await controllerDiretores.getExibirDiretoresFilme(filmeId);
+    response.status(dadosDiretores.status_code)
+    response.json(dadosDiretores)
+})
 
 /** CRUD - ATORES **/
 app.post('/acmefilmes/ator', cors(), bodyParserJSON, async function(request, response) {
@@ -296,7 +325,13 @@ app.get('/acmefilmes/ator/:id', cors(), async function(request, response) {
     response.status(dadosAtor.status_code);
     response.json(dadosAtor);
 });
+app.get('/acmefilmes/atorfilme/:id', cors(), async function(request, response,){
+    let filmeId = request.params.id
 
+    let dadosAtores = await controllerAtores.getExibirAtoresFilme(filmeId);
+    response.status(dadosAtores.status_code)
+    response.json(dadosAtores)
+})
 
 
 /** CRUD - USUÁRIOS **/

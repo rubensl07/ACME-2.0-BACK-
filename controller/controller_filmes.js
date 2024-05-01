@@ -1,5 +1,10 @@
 const message = require('../config.js')
 const DAO = require('../model/DAO/filme.js')
+const classificacoesIndicativasDAO = require('../model/DAO/classificacoes_indicativas.js')
+const generosDAO = require('../model/DAO/generos.js')
+const diretoresDAO = require('../model/DAO/diretores.js')
+const atoresDAO = require('../model/DAO/atores.js')
+
 
 const setInserirNovoFilme = async function (dadosFilme, contentType) {
 
@@ -109,7 +114,6 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
 
                 if(validateStatus){
                     let novoFilme = await DAO.updateFilme(id, dadosFilme)
-                    console.log(novoFilme)
                     if(novoFilme) {
                         novoFilmeJSON.filme = dadosFilme
                         novoFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
@@ -132,12 +136,45 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
 }
 
 const getListarFilmes = async function () {
+    const dadosClassificacoesIndicativas = await classificacoesIndicativasDAO.selectAllClassificacoesIndicativas();
+
     let filmesJSON = {};
     let dadosFilmes = await DAO.selectAllFilmes();
         if (dadosFilmes) {
         if(dadosFilmes.length > 0) {
-            dadosFilmes.generos = 'oi'
-            dadosFilmes.diretores = []
+            for (let index = 0; index < dadosFilmes.length; index++) {
+                const search = dadosFilmes[index].id
+                const dadosGeneros = await generosDAO.selectByIdFilme(search);
+                const dadosDiretores = await diretoresDAO.selectByIdFilme(search);
+                const dadosAtores = await atoresDAO.selectByIdFilme(search);
+ 
+                let classificacaoIndicativaJSON = {}
+                dadosClassificacoesIndicativas.forEach(element => {
+                    if (element.id == dadosFilmes[index].id_classificacao_indicativa) {
+                        classificacaoIndicativaJSON = element
+                        delete dadosFilmes[index].id_classificacao_indicativa
+                    }
+                });
+
+                let listaGeneros = []
+                dadosGeneros.forEach(genero=>{
+                   listaGeneros.push(genero)
+                })
+                let listaDiretores = []
+                dadosDiretores.forEach(diretor =>{
+                    listaDiretores.push(diretor)
+                })
+                let listaAtores = []
+                dadosAtores.forEach(ator =>{
+                   listaAtores.push(ator)
+                })
+
+                dadosFilmes[index].generos = listaGeneros
+                dadosFilmes[index].diretores = listaDiretores
+                dadosFilmes[index].atores = listaAtores
+                 dadosFilmes[index].classificacaoIndicativa = classificacaoIndicativaJSON
+            }
+
             filmesJSON.filmes = dadosFilmes;
             filmesJSON.quantidade = dadosFilmes.length;
             filmesJSON.status_code = 200;
@@ -174,17 +211,47 @@ const getListarFilmesSort = async function (sort) {
 }
 
 const getBuscarFilmeId = async function (search) {
-    let idFilme = search;
+    const dadosClassificacoesIndicativas = await classificacoesIndicativasDAO.selectAllClassificacoesIndicativas();
+    const dadosGeneros = await generosDAO.selectByIdFilme(search);
+    const dadosDiretores = await diretoresDAO.selectByIdFilme(search);
+    const dadosAtores = await atoresDAO.selectByIdFilme(search);
 
-    let filmeJSON = {};
+    let idFilme = search;
 
     if (idFilme == '' || idFilme == undefined || isNaN(idFilme)) {
         return message.ERROR_INVALID_ID; //400
     } else {
+        let filmeJSON = {};
         let dadosFilme = await DAO.selectByIdFilme(idFilme);
-
         if (dadosFilme) {
             if (dadosFilme.length > 0) {
+                 let classificacaoIndicativaJSON = {}
+                 dadosClassificacoesIndicativas.forEach(element => {
+                     if (element.id == dadosFilme[0].id_classificacao_indicativa) {
+                         classificacaoIndicativaJSON = element
+                         delete dadosFilme[0].id_classificacao_indicativa
+                        }
+                    });
+                    let listaGeneros = []
+                    dadosGeneros.forEach(genero=>{
+                       listaGeneros.push(genero)
+                    })
+                let listaDiretores = []
+                    dadosDiretores.forEach(diretor =>{
+                    listaDiretores.push(diretor)
+                 })
+                 let listaAtores = []
+                 dadosAtores.forEach(ator =>{
+                    listaAtores.push(ator)
+                 })
+
+                    dadosFilme[0].classificacaoIndicativa = classificacaoIndicativaJSON
+                    dadosFilme[0].generos = listaGeneros
+                    dadosFilme[0].diretores = listaDiretores
+                    dadosFilme[0].atores = listaAtores
+
+
+                    
                 filmeJSON.filme = dadosFilme;
                 filmeJSON.status_code = 200;
                 return filmeJSON;

@@ -139,9 +139,29 @@ const getBuscarDiretorId = async function (search) {
     }
 }
 
+const getExibirDiretoresFilme = async function(search){
+    let diretoresJSON = {};
+    if (search == '' || search == undefined || isNaN(search)) {
+        return message.ERROR_INVALID_ID; //400
+    } else {
+        let dadosDiretores = await DAO.selectByIdFilme(search);
+        if (dadosDiretores) {
+            if (dadosDiretores.length > 0) {
+                diretoresJSON.diretores = dadosDiretores;
+                diretoresJSON.status_code = 200;
+                return diretoresJSON;
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_DB //500
+        }
+    }
+}
 module.exports = {
     setInserirNovoDiretor,
     setAtualizarDiretor,
     getListarDiretores,
-    getBuscarDiretorId
+    getBuscarDiretorId,
+    getExibirDiretoresFilme
 }

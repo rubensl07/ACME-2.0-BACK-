@@ -55,10 +55,21 @@ const selectByIdAtor = async function (search) {
     }
 }
 
+const selectByIdFilme = async function (search) {
+    try {
+        const sql = `SELECT Atores.id,Atores.nome,Atores.foto FROM Atores JOIN ator_filme ON Atores.id = ator_filme.id_ator WHERE id_filme = ${search}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result
+    } catch (error) {
+        return false
+    }
+}
+
 module.exports = {
     insertAtor,
     updateAtor,
     pegarUltimoId,
     selectAllAtores,
     selectByIdAtor,
+    selectByIdFilme,
 }
