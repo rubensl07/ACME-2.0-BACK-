@@ -79,9 +79,9 @@ const selectByIdFilme = async function (search) {
         return false
     }
 }
-const deleteGeneroFilme = async function (search) {
+const deleteGeneroFilme = async function (dadosBody) {
     try {
-        const sql = ` DELETE From filme_genero WHERE filme_genero.id = ${search}`;
+        const sql = ` DELETE From filme_genero WHERE filme_genero.id_filme = ${dadosBody.idFilme} AND filme_genero.id_genero = ${dadosBody.idGenero}`;
         let result = await prisma.$executeRawUnsafe(sql)
         if (result) {
             return true

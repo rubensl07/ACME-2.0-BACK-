@@ -29,16 +29,20 @@ const setInserirNovoGenero = async function (dadosGenero, contentType) {
     }
 }
 
-const setExcluirGeneroFilme = async function (id) {
-    let excluirGeneroFilmeJSON={}
-    let generoExcluido = await DAO.deleteGeneroFilme(id)
-    if(generoExcluido){
-        excluirGeneroFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-        excluirGeneroFilmeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-        excluirGeneroFilmeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
-        return excluirGeneroFilmeJSON //202
+const setExcluirGeneroFilme = async function (dadosBody,contentType) {
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let excluirGeneroFilmeJSON={}
+        let generoExcluido = await DAO.deleteGeneroFilme(dadosBody)
+        if(generoExcluido){
+            excluirGeneroFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
+            excluirGeneroFilmeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
+            excluirGeneroFilmeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+            return excluirGeneroFilmeJSON //202
+        } else {
+            return message.ERROR_NOT_FOUND //404
+        }
     } else {
-        return message.ERROR_NOT_FOUND //404
+        return message.ERROR_CONTENT_TYPE // 415
     }
 }
 const setInserirGeneroFilme = async function (dados,contentType) {

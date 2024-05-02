@@ -53,7 +53,7 @@ const setInserirNovoFilme = async function (dadosFilme, contentType) {
                 novoFilmeJSON.status = message.SUCESS_CREATED_ITEM.status
                 novoFilmeJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
                 novoFilmeJSON.message = message.SUCESS_CREATED_ITEM.message
-                novoFilmeJSON.id = 'ID adicionado: '+id[0].id
+                novoFilmeJSON.idAdicionado = +id[0].id
 
                 return novoFilmeJSON //201
             } else {
@@ -119,7 +119,7 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
                         novoFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
                         novoFilmeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
                         novoFilmeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
-                        novoFilmeJSON.id = 'ID editado: '+id
+                        novoFilmeJSON.idEditado = id
 
                         return novoFilmeJSON //201
                     } else {
@@ -160,6 +160,7 @@ const getListarFilmes = async function () {
                 dadosGeneros.forEach(genero=>{
                    listaGeneros.push(genero)
                 })
+                console.log(dadosDiretores);
                 let listaDiretores = []
                 dadosDiretores.forEach(diretor =>{
                     listaDiretores.push(diretor)
@@ -334,7 +335,44 @@ const getFiltrarFilmes = async function (filter, contentType) {
     return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
 }
 }
-
+const getExibirFilmesDiretor = async function(search){
+    let filmesJSON = {};
+    if (search == '' || search == undefined || isNaN(search)) {
+        return message.ERROR_INVALID_ID; //400
+    } else {
+        let dadosFilmes = await DAO.selectByIdDiretor(search);
+        if (dadosFilmes) {
+            if (dadosFilmes.length > 0) {
+                filmesJSON.filmes = dadosFilmes;
+                filmesJSON.status_code = 200;
+                return filmesJSON;
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_DB //500
+        }
+    }
+}
+const getExibirFilmesAtor = async function(search){
+    let filmesJSON = {};
+    if (search == '' || search == undefined || isNaN(search)) {
+        return message.ERROR_INVALID_ID; //400
+    } else {
+        let dadosFilmes = await DAO.selectByIdAtor(search);
+        if (dadosFilmes) {
+            if (dadosFilmes.length > 0) {
+                filmesJSON.filmes = dadosFilmes;
+                filmesJSON.status_code = 200;
+                return filmesJSON;
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_DB //500
+        }
+    }
+}
 
 module.exports = {
     setInserirNovoFilme,
@@ -344,5 +382,7 @@ module.exports = {
     getBuscarFilmeId,
     getPesquisarFilme,
     getFiltrarFilmes,
-    getListarFilmesSort
+    getListarFilmesSort,
+    getExibirFilmesDiretor,
+    getExibirFilmesAtor
 }

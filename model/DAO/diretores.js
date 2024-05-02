@@ -57,7 +57,7 @@ const selectByIdDiretor = async function (search) {
 
 const selectByIdFilme = async function (search) {
     try {
-        const sql = `SELECT Diretores.id,diretores.nome,diretores.biografia,diretores.foto FROM Diretores JOIN diretor_filme ON Diretores.id = diretor_filme.id_diretor WHERE id_filme = ${search}`;
+        const sql = `SELECT Diretores.id,diretores.nome,diretores.foto FROM Diretores JOIN diretor_filme ON Diretores.id = diretor_filme.id_diretor WHERE id_filme = ${search}`;
         let result = await prisma.$queryRawUnsafe(sql);
         return result
     } catch (error) {

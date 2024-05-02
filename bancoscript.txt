@@ -326,12 +326,349 @@ null,
 1
 ),
 (
-	'Erin Moriarty',
-	'1994-06-24',
+	'Adam Sandler',
+	'1966-09-09',
     null,
-	'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/968059_v9_bb.jpg',
+	'https://br.web.img3.acsta.net/c_310_420/pictures/17/06/20/16/57/103535.jpg',
+    1
+),
+(
+	'Chris Rock',
+	'1965-02-07',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/93/31/36/20248941.jpg',
+    1
+),
+(
+	'Kevin James',
+	'1965-04-26',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/94/12/15/20304513.jpg',
+    1
+),
+(
+	'David Spade',
+	'1964-07-22',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/06/29/16/57/2462090.jpg',
+    1
+),
+(
+	'Salma Hayek',
+	'1966-09-02',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/11/19/01/46/3123891.jpg',
     2
-);
+),
+(
+	'Cameron Boyce',
+	'1999-05-28',
+    '2019-07-06',
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/03/15/21/15/2143380.jpg',
+    1
+),
+(
+	'Jake Goldberg',
+	'1996-02-07',
+    null,
+	'https://m.media-amazon.com/images/M/MV5BNmNkNTVhMGYtZjE5Mi00MjQ0LWExNTYtZjU2NDczM2JmNTVjXkEyXkFqcGdeQXVyMTM2MTE1Nzg0._V1_.jpg',
+    1
+),
+(
+	'Alexys Nycole Sanchez',
+	'2003-06-29',
+    null,
+	'https://m.media-amazon.com/images/M/MV5BNzMyODg5MDEtOWQ4ZS00MzE5LTllYTYtNGRhOGJmYzBmY2U3XkEyXkFqcGdeQXVyMjEyMzc2NTk@._V1_FMjpg_UX1000_.jpg',
+    2
+),
+(
+	'Taylor Lautner',
+	'1992-02-11',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/95/53/48/20412947.jpg',
+    1
+),
+(
+	'Jason Schwartzman',
+	'1980-06-26',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/09/19/22/28/1040525.jpg',
+    1
+),
+(
+	'Rashida Jones',
+	'1976-02-25',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/09/13/19/52/4932131.jpg',
+    2
+),
+(
+	'J.K. Simmons',
+	'1955-01-09',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/10/21/14/41/204594.jpg',
+    1
+),
+(
+	'John Travolta',
+	'1954-02-18',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/medias/nmedia/18/35/26/97/20186850.jpg',
+    1
+),
+(
+	'Samuel L. Jackson',
+	'1948-12-21',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/07/26/21/10/4344066.jpg',
+    1
+),
+(
+	'Bruce Willis',
+	'1955-03-19',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/07/26/20/59/1349875.jpg',
+    1
+),
+(
+	'Uma Thurman',
+	'1970-04-29',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/08/29/21/14/0483094.jpg',
+    2
+),
+(
+	'Edward Norton',
+	'1969-08-18',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/07/25/21/56/3416190.jpg',
+    1
+),
+(
+	'Brad Pitt',
+	'1963-12-18',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/03/19/17/23/0985270.jpg',
+    1
+),
+(
+	'Helena Bonham Carter',
+	'1966-05-26',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/09/03/22/10/1336392.jpg',
+    2
+),
+(
+	'Nicolas Cage',
+	'1964-01-07',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/07/20/18/14/582462.jpg',
+    1
+),
+(
+	'Eva Mendes',
+	'1974-03-05',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/05/08/00/26/4952129.jpg',
+    2
+),
+(
+	'Sam Elliott',
+	'1944-08-09',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/09/17/15/38/5936959.jpg',
+    1
+),
+(
+	'Wes Bentley',
+	'1978-09-04',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/15/06/01/16/47/325178.jpg',
+    1
+),
+(
+	'Elijah Wood',
+	'1981-01-28',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/15/05/28/17/28/399384.jpg',
+    1
+),
+(
+	'Sean Astin',
+	'1971-02-25',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/07/08/16/07/4147422.jpg',
+    1
+),
+(
+	'Viggo Mortensen',
+	'1958-10-20',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/18/09/18/21/23/3866488.jpg',
+    1
+),
+(
+	'Ian McKellen',
+	'1939-05-25',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/92/43/17/20198915.jpg',
+    1
+),
+(
+	'Ian Holm',
+	'1931-09-12',
+    '2020-06-19',
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/07/16/21/22/426928.jpg',
+    1
+),
+(
+	'Ryan Reynolds',
+	'1976-10-23',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/07/28/17/15/280194.jpg',
+    1
+),
+(
+	'Jodie Comer',
+	'1993-03-11',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/20/01/06/23/10/1440387.jpg',
+    2
+),
+(
+	'Joe Keery',
+	'1994-04-24',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/07/08/15/54/5563340.jpg',
+    1
+),
+(
+	'Taika Waititi',
+	'1975-08-16',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/10/16/00/10/5197437.jpg',
+    1
+),
+(
+	'Jun Shison',
+	'1995-03-05',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/03/20/17/53/1795301.jpg',
+    1
+),
+(
+	'Mamoru Miyano',
+	'1983-06-08',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/15/12/15/19/17/507859.jpg',
+    1
+),
+(
+	'Yûki Kaji',
+	'1985-09-03',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/17/08/03/19/02/204125.jpg',
+    1
+),
+(
+	"Shin'ichirô Miki",
+	'1968-03-18',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/21/07/06/17/44/3935117.jpg',
+    1
+),
+(
+	'Sayaka Senbongi',
+	'1995-11-24',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/21/07/14/17/08/5273739.jpg',
+    2
+),
+(
+	"Shawn Wayans",
+	'1971-01-19',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/16/03/03/13/58/317633.jpg',
+    1
+),
+(
+	"Marlon Wayans",
+	'1972-07-23',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/15/06/11/14/51/401681.jpg',
+    1
+),
+(
+	"Maitland Ward",
+	'1977-02-03',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/medias/nmedia/18/94/42/50/20328099.jpg',
+    2
+),
+(
+	"Anne Dudek",
+	'1975-03-22',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/17/03/24/15/25/154337.jpg',
+    2
+),
+(
+	"Terry Crews",
+	'1968-07-30',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/08/01/20/13/3535250.jpg',
+    1
+),
+(
+	"Chris Evans",
+	'1981-06-13',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/04/22/19/59/2129500.jpg',
+    1
+),
+(
+	"Mark Ruffalo",
+	'1967-11-22',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/04/22/20/02/3083743.jpg',
+    1
+),
+(
+	"Chris Hemsworth",
+	'1983-08-11',
+    null,
+	'https://br.web.img2.acsta.net/c_310_420/pictures/19/06/05/12/04/5240675.jpg',
+    1
+),
+(
+	"Scarlett Johansson",
+	'1984-11-22',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/20/01/07/02/04/3952839.jpg',
+    2
+),
+(
+	"Jeremy Renner",
+	'1971-01-07',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/19/04/23/01/02/3070093.jpg',
+    1
+),
+(
+	"Brie Larson",
+	'1989-10-01',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/16/02/29/14/46/104223.jpg',
+    2
+),
+(
+	"Paul Rudd",
+	'1969-04-06',
+    null,
+	'https://br.web.img3.acsta.net/c_310_420/pictures/18/07/05/00/54/2308079.jpg',
+    1
+)
+;
 
 CREATE TABLE diretor_nacionalidade(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -344,9 +681,15 @@ INSERT INTO diretor_nacionalidade(id_diretor,id_nacionalidade)VALUES
 (1,63),
 (2,63),
 (3,63),
-(1,64),
-(3,55);
-
+(4,63),
+(5,62),
+(6,63),
+(7,63),
+(8,135),
+(9,35),
+(9,63),
+(10,97),
+(11,63);
 CREATE TABLE ator_nacionalidade(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_ator INT NOT NULL,
@@ -354,10 +697,62 @@ id_nacionalidade INT NOT NULL,
 CONSTRAINT NacionalidadeDoAtor_ator FOREIGN KEY (id_ator) REFERENCES Atores(id),
 CONSTRAINT NacionalidadeDoAtor_nacionalidade FOREIGN KEY (id_nacionalidade) REFERENCES Nacionalidades(id)
 );
+
 INSERT INTO ator_nacionalidade(id_ator,id_nacionalidade)VALUES
 (1,63),
-(2,63);
-
+(2,63),
+(3,63),
+(4,63),
+(5,63),
+(6,120),
+(6,63),
+(7,63),
+(8,63),
+(9,63),
+(10,63),
+(11,63),
+(12,63),
+(13,63),
+(14,63),
+(15,63),
+(16,63),
+(17,63),
+(18,63),
+(19,63),
+(20,149),
+(21,63),
+(22,63),
+(23,63),
+(24,63),
+(25,63),
+(26,63),
+(27,63),
+(28,63),
+(29,63),
+(30,35),
+(30,63),
+(31,149),
+(32,63),
+(33,135),
+(34,97),
+(35,97),
+(36,97),
+(37,97),
+(38,97),
+(39,63),
+(40,63),
+(41,63),
+(42,63),
+(43,63),
+(44,63),
+(45,63),
+(46,12),
+(47,63),
+(47,52),
+(48,63),
+(49,63),
+(50,63)
+;
 CREATE TABLE Classificacao_Indicativa(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idade VARCHAR(2) NOT NULL,
@@ -454,7 +849,7 @@ CREATE TABLE Filmes(
 
 INSERT INTO Filmes(nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa) VALUES (
 	"Gente Grande 2",
-    "Lenny (Adam Sandler), Eric (Kevin James), Kurt (Chris Rock) e Marcus (David Spade) voltam a morar na mesma cidade. Lá, suas vidas seguem o curso natural dos adultos, seja pela existência dos problemas com as esposas para uns, com os filhos para outros, ou tudo junto e misturado. A coisa dá uma complicada quando os marmanjos pretendiam matar a saudade num dia de folga e acabam encarando os jovens da região, que agora dominam o lugar. É quando eles acabam tendo que enfrentar alguns fantasmas do passado, entre eles a covardia diante de valentões e o famigerado bullyng na escola. Mas algumas surpresas estão para acontecer, como a chegada de um filho rebelde para Marcus domar, uma possível gravidez e uma festa de arromba, que não vai deixar pedra sobre pedra.",
+    "Lenny (Adam Sandler), Eric (Kevin James), Kurt (Chris Rock) e Marcus (David Spade) voltam a morar na mesma cidade. Lá, suas vidas seguem o curso natural dos adultos, seja pela existência dos problemas com as esposas para uns, com os filhos para outros, ou tudo junto e misturado. A coisa dá uma complicada quando os marmanjos pretendiam matar a saudade num dia de folga e acabam encarando os jovens da região, que agora dominam o lugar. É quando eles acabam tendo que enfrentar alguns fantasmas do passado, entre eles a covardia diante de valentões e o famigerado bullying na escola. Mas algumas surpresas estão para acontecer, como a chegada de um filho rebelde para Marcus domar, uma possível gravidez e uma festa de arromba, que não vai deixar pedra sobre pedra.",
     '01:41:00',
     '2013-08-16',
     null,
@@ -562,6 +957,25 @@ INSERT INTO Filmes(nome,sinopse,duracao,data_lancamento,data_relancamento,foto_c
     3
 );
 
+CREATE TABLE diretor_filme(	
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY, 
+id_diretor INT NOT NULL,
+id_filme INT NOT NULL,
+CONSTRAINT FilmeDiretor_Diretor FOREIGN KEY (id_diretor) REFERENCES Diretores(id),
+CONSTRAINT FilmeDiretor_Filme   FOREIGN KEY (id_filme)   REFERENCES Filmes(id)
+);
+INSERT INTO diretor_filme (id_diretor,id_filme) VALUES 
+(1,3),
+(2,10),
+(3,10),
+(4,1),
+(5,2),
+(6,4),
+(7,5),
+(8,6),
+(9,7),
+(10,8),
+(11,9);
 
 CREATE TABLE ator_filme(	
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY, 
@@ -570,27 +984,58 @@ id_ator INT NOT NULL,
 CONSTRAINT FilmeAtor_Filme FOREIGN KEY (id_filme) REFERENCES Filmes(id),
 CONSTRAINT FilmeAtor_Ator FOREIGN KEY (id_ator) REFERENCES Atores(id)
 );
-
-CREATE TABLE diretor_filme(	
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY, 
-id_filme INT NOT NULL,
-id_diretor INT NOT NULL,
-CONSTRAINT FilmeDiretor_Filme FOREIGN KEY (id_filme) REFERENCES Filmes(id),
-CONSTRAINT FilmeDiretor_Diretor FOREIGN KEY (id_diretor) REFERENCES Diretores(id)
-);
-INSERT into diretor_filme (id_filme, id_diretor) VALUES 
-(1,4),
-(2,5),
+INSERT INTO ator_filme (id_ator,id_filme) VALUES 
+(2,1),
 (3,1),
-(4,6),
-(5,7),
-(6,8),
-(7,9),
-(8,10),
-(9,11),
-(10,2),
-(10,3);
-
+(4,1),
+(5,1),
+(6,1),
+(7,1),
+(8,1),
+(9,1),
+(10,1),
+(11,2),
+(12,2),
+(13,2),
+(14,3),
+(15,3),
+(16,3),
+(17,3),
+(18,4),
+(19,4),
+(20,4),
+(21,5),
+(22,5),
+(23,5),
+(24,5),
+(25,6),
+(26,6),
+(27,6),
+(28,6),
+(29,6),
+(30,7),
+(31,7),
+(32,7),
+(33,7),
+(34,8),
+(35,8),
+(36,8),
+(37,8),
+(38,8),
+(39,9),
+(40,9),
+(41,9),
+(42,9),
+(43,9),
+(44,10),
+(45,10),
+(46,10),
+(47,10),
+(48,10),
+(49,10),
+(50,10),
+(33,10)
+;
 CREATE TABLE filme_genero(	
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY, 
 id_filme INT NOT NULL,
@@ -608,7 +1053,6 @@ INSERT INTO filme_genero(id_filme,id_genero)VALUES
 (3,1),
 (3,8),
 (3,20),
-(3,1),
 (4,8),
 (4,20),
 (5,1),
@@ -635,24 +1079,21 @@ INSERT INTO filme_genero(id_filme,id_genero)VALUES
 (9,6),
 (9,10)
 ;
-
-SELECT * FROM Filmes;
-SELECT * FROM Generos;
+SELECT filme_genero.id,Generos.id AS id_genero,Generos.nome FROM Generos JOIN filme_genero ON Generos.id = filme_genero.id_genero WHERE id_filme = 7;
+SELECT filme_genero.id, Generos.id,Generos.nome FROM Generos JOIN filme_genero ON Generos.id = filme_genero.id_genero WHERE id_filme =9;
 CREATE TABLE Usuarios(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,
     nome VARCHAR(80) NOT NULL,
     nascimento DATE NOT NULL,
-    foto_usuario VARCHAR(200) NOT NULL,
     login VARCHAR(50) NOT NULL,
     senha VARCHAR (100) NOT NULL,
     id_sexo INT NOT NULL,
     CONSTRAINT Usuario_Sexo FOREIGN KEY (id_sexo) REFERENCES Sexos(id),
     admin BOOLEAN DEFAULT false
 );
-INSERT INTO Usuarios(nome,nascimento,foto_usuario,login,senha,id_sexo) VALUES (
+INSERT INTO Usuarios(nome,nascimento,login,senha,id_sexo) VALUES (
 	'Rubens Luiz Lobo de Almeida',
     '2007-03-16',
-    'https://br.web.img3.acsta.net/c_310_420/pictures/18/06/29/00/35/0101925.jpg',
     'rubens@',
     'senha',
     1
@@ -660,7 +1101,6 @@ INSERT INTO Usuarios(nome,nascimento,foto_usuario,login,senha,id_sexo) VALUES (
 (
 	'Otavio Ugá',
     '1983-06-20',
-    'https://media.licdn.com/dms/image/C5103AQFVdUFKm7dPvA/profile-displayphoto-shrink_400_400/0/1516923062606?e=2147483647&v=beta&t=doWkZXi-efaLwdweyeyrIZEd612W39l-gYzAQGkI6UA',
     'otavio@email',
     'superoito',
     1
@@ -732,8 +1172,8 @@ ORDER BY Filmes.id;
 SELECT Filmes.id,nome,sinopse,duracao,data_lancamento,foto_capa,foto_fundo,cor,Classificacao_indicativa.idade AS classificacao FROM Filmes JOIN Classificacao_indicativa ON Filmes.id_classificacao_indicativa = Classificacao_indicativa.id WHERE (Filmes.id_classificacao_indicativa= 3 OR Filmes.id_classificacao_indicativa= 2) AND (Filmes.duracao < '01:50:00') AND (Filmes.data_relancamento IS NOT NULL);
 
 # PEGA OS USUÁRIOS E OS FAVORITOS
-SELECT Favoritos.id, Usuarios.nome AS usuario, Filmes.nome AS filme_favoritado FROM Usuarios JOIN Favoritos ON Usuarios.id = Favoritos.usuario_id JOIN Filmes ON Filmes.id = Favoritos.filme_id;
-SELECT Favoritos.id, Usuarios.nome AS usuario, Filmes.nome AS filme_favoritado FROM Favoritos INNER JOIN Usuarios ON Favoritos.usuario_id = Usuarios.id INNER JOIN Filmes ON Favoritos.filme_id = Filmes.id;
+SELECT Favoritos.id, Usuarios.nome AS usuario, Filmes.nome AS filme_favoritado FROM Usuarios JOIN Favoritos ON Usuarios.id = Favoritos.id_usuario JOIN Filmes ON Filmes.id = Favoritos.id_filme;
+SELECT Favoritos.id, Usuarios.nome AS usuario, Filmes.nome AS filme_favoritado FROM Favoritos INNER JOIN Usuarios ON Favoritos.id_usuario = Usuarios.id INNER JOIN Filmes ON Favoritos.id_filme = Filmes.id;
 
 # Verificar os gêneros dos filmes
 SELECT Filmes.Nome, Generos.nome FROM Filmes JOIN filme_genero ON Filmes.id = filme_genero.id_filme JOIN Generos ON filme_genero.id_genero = Generos.id;
@@ -764,17 +1204,21 @@ SELECT * FROM Filmes;
 SELECT * FROM filme_genero;
 SELECT * FROM diretor_nacionalidade;
 SELECT * FROM diretor_filme;
-
 SELECT * FROM Atores;
 SELECT * FROM ator_nacionalidade;
 SELECT * FROM ator_filme;
 SELECT * FROM Usuarios;
 SELECT * FROM Favoritos;
 SELECT * FROM Favoritos WHERE Favoritos.id = 1;
+SELECT * FROM ator_filme;
 
 SELECT Filmes.nome,Diretores.nome FROM Filmes JOIN diretor_filme ON Filmes.id = diretor_filme.id_filme JOIN Diretores ON diretor_filme.id_diretor = Diretores.id;
 
 SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, (SELECT GROUP_CONCAT(Generos.nome SEPARATOR ', ') FROM filme_genero INNER JOIN Generos ON filme_genero.id_genero = Generos.id WHERE filme_genero.id_filme = Filmes.id) AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id
             WHERE (Filmes.nome LIKE '%%' OR Filmes.sinopse LIKE '%%') AND (Filmes.id_classificacao_indicativa<=6) AND (Filmes.data_lancamento>='0001-01-01' AND Filmes.data_lancamento<='9999-12-31') AND (Generos.id IN (6)) GROUP BY Filmes.id;
 
+SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa FROM FIlmes JOIN diretor_filme ON Filmes.id = diretor_filme.id_filme WHERE DIRETOR_FILME.ID_DIRETOR = 1;
 
+SELECT Diretores.id,diretores.nome,diretores.foto FROM Diretores JOIN diretor_filme ON Diretores.id = diretor_filme.id_diretor WHERE id_filme = 2;
+
+SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa FROM FIlmes JOIN ator_filme ON Filmes.id = ator_filme.id_filme where ator_filme.id_ator = 2;

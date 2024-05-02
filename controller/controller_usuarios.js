@@ -87,12 +87,10 @@ const setInserirNovoUsuario = async function (dadosUsuario, contentType) {
 }
 const setAtualizarUsuario = async function (id, dadosUsuario, contentType) {
     try {
-
         if (String(contentType).toLowerCase() == 'application/json') {
             let novoUsuarioJSON = {}
             if (dadosUsuario.nome == '' || dadosUsuario.nome == undefined || dadosUsuario.nome == null || dadosUsuario.nome.length > 80 ||
                 dadosUsuario.nascimento == '' || dadosUsuario.nascimento == undefined || dadosUsuario.nascimento == null || dadosUsuario.nascimento.length != 10 ||
-                dadosUsuario.foto_usuario == '' || dadosUsuario.foto_usuario == undefined || dadosUsuario.foto_usuario == null || dadosUsuario.foto_usuario.length > 200 ||
                 dadosUsuario.login == '' || dadosUsuario.login == undefined || dadosUsuario.login == null || dadosUsuario.login.length > 50 ||
                 dadosUsuario.senha == '' || dadosUsuario.senha == undefined || dadosUsuario.senha == null || dadosUsuario.senha.length > 100
             ) {

@@ -21,14 +21,12 @@ const insertUsuario = async function (dadosUsuario) {
         let sql = `INSERT INTO Usuarios (
                 nome,
                 nascimento,
-                foto_usuario,
                 login,
                 senha,
                 id_sexo
             ) VALUES (
                 "${dadosUsuario.nome}",
                 "${dadosUsuario.nascimento}",
-                '${dadosUsuario.foto_usuario}',
                 '${dadosUsuario.login}',
                 '${dadosUsuario.senha}',
                 ${dadosUsuario.id_sexo}
@@ -64,13 +62,13 @@ const updateUsuario = async function (id, dadosUsuario) {
         let sql = `UPDATE Usuarios SET 
             nome = "${dadosUsuario.nome}",
             nascimento = "${dadosUsuario.nascimento}",
-            foto_usuario = '${dadosUsuario.foto_usuario}',
             login = '${dadosUsuario.login}',
             senha = '${dadosUsuario.senha}',
             id_sexo = ${dadosUsuario.id_sexo},
             admin = ${dadosUsuario.admin}
             WHERE id = ${id}`
     
+            console.log(sql);
         let result = await prisma.$executeRawUnsafe(sql)
         if(result) {
             return true

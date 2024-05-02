@@ -123,6 +123,20 @@ app.get('/acmefilmes/filmes/sortby/:sort', cors(), async function(request, respo
     response.status(dadosFilmes.status_code)
     response.json(dadosFilmes)
 })
+app.get('/acmefilmes/filmediretor/:id', cors(), async function(request, response,){
+    let diretorId = request.params.id
+
+    let dadosFilmes = await controllerFilmes.getExibirFilmesDiretor(diretorId);
+    response.status(dadosFilmes.status_code)
+    response.json(dadosFilmes)
+})
+app.get('/acmefilmes/filmeator/:id', cors(), async function(request, response,){
+    let atorId = request.params.id
+
+    let dadosFilmes = await controllerFilmes.getExibirFilmesAtor(atorId);
+    response.status(dadosFilmes.status_code)
+    response.json(dadosFilmes)
+})
 
 
 
@@ -158,10 +172,12 @@ app.post('/acmefilmes/generofilme', cors(), bodyParserJSON,async function(reques
     response.status(resultDadosNovaConexao.status_code)
     response.json(resultDadosNovaConexao)
 })
-app.delete('/acmefilmes/generofilme/:id', cors(), async function(request,response){
+app.delete('/acmefilmes/generofilme', cors(),bodyParserJSON,async function(request,response){
+    
+    let contentType = request.headers['content-type'];
+    let dadosBody = request.body;
 
-    let generoFilmeId = request.params.id
-    let resultDadosExcluirGeneroFilme = await controllerGeneros.setExcluirGeneroFilme(generoFilmeId)
+    let resultDadosExcluirGeneroFilme = await controllerGeneros.setExcluirGeneroFilme(dadosBody,contentType)
 
     response.status(resultDadosExcluirGeneroFilme.status_code)
     response.json(resultDadosExcluirGeneroFilme)

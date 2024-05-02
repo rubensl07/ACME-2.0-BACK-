@@ -71,9 +71,10 @@ const deleteFilme = async function (search) {
     try {
         const apagarFavorito = ` DELETE FROM Favoritos WHERE id_filme = ${search}`;
         const sql = `DELETE FROM Filmes WHERE id = ${search}`;
+        console.log(sql);
         let resultApagarFavorito = await prisma.$executeRawUnsafe(apagarFavorito)
-        let result = await prisma.$executeRawUnsafe(sql)
-        if (resultApagarFavorito && result) {
+        let resultApagarFilme = await prisma.$executeRawUnsafe(sql)
+        if (resultApagarFavorito && resultApagarFilme) {
             return true
         } else {
             return false
@@ -183,6 +184,25 @@ const selectFilterFilmes = async function (sql) {
 
 }
 
+const selectByIdDiretor = async function (search) {
+    try {
+        const sql = `SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa FROM FIlmes JOIN diretor_filme ON Filmes.id = diretor_filme.id_filme WHERE DIRETOR_FILME.ID_DIRETOR = ${search}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result
+    } catch (error) {
+        return false
+    }
+}
+const selectByIdAtor = async function (search) {
+    try {
+        const sql = `SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa FROM FIlmes JOIN ator_filme ON Filmes.id = ator_filme.id_filme where ator_filme.id_ator = ${search}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result
+    } catch (error) {
+        return false
+    }
+}
+
 module.exports = {
  insertFilme,
  deleteFilme,
@@ -193,4 +213,6 @@ module.exports = {
  selectPesquisarFilmes,
  selectFilterFilmes,
  selectAllFilmesSort,
+ selectByIdDiretor,
+ selectByIdAtor
 }
