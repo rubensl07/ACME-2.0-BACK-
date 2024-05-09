@@ -68,10 +68,10 @@ const setInserirNovoUsuario = async function (dadosUsuario, contentType) {
 
                     if (novoUsuario) {
                         novoUsuarioJSON.usuario = dadosUsuario
-                        novoUsuarioJSON.status = message.SUCESS_CREATED_ITEM.status
-                        novoUsuarioJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                        novoUsuarioJSON.message = message.SUCESS_CREATED_ITEM.message
-                        novoSexoJSON.id = 'ID adicionado: '+id[0].id
+                        novoUsuarioJSON.status = message.SUCCESS_CREATED_ITEM.status
+                        novoUsuarioJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                        novoUsuarioJSON.message = message.SUCCESS_CREATED_ITEM.message
+                        novoUsuarioJSON.id = parseInt(id[0].id)
 
                         return novoUsuarioJSON //201
                     } else {
@@ -99,10 +99,10 @@ const setAtualizarUsuario = async function (id, dadosUsuario, contentType) {
                     let novoUsuario = await DAO.updateUsuario(id, dadosUsuario)
                     if (novoUsuario) {
                         novoUsuarioJSON.usuario = dadosUsuario
-                        novoUsuarioJSON.status = message.SUCESS_CREATED_ITEM.status
-                        novoUsuarioJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                        novoUsuarioJSON.message = message.SUCESS_CREATED_ITEM.message
-                        novoUsuarioJSON.id = 'ID editado: '+id
+                        novoUsuarioJSON.status = message.SUCCESS_CREATED_ITEM.status
+                        novoUsuarioJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                        novoUsuarioJSON.message = message.SUCCESS_CREATED_ITEM.message
+                        novoUsuarioJSON.id = parseInt(id)
 
                         return novoUsuarioJSON //201
                     } else {
@@ -120,9 +120,9 @@ const setExcluirUsuario = async function (id) {
     let excluirUsuarioJSON={}
     let usuarioExcluido = await DAO.deleteUsuario(id)
     if(usuarioExcluido){
-        excluirUsuarioJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-        excluirUsuarioJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-        excluirUsuarioJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+        excluirUsuarioJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirUsuarioJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirUsuarioJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
         return excluirUsuarioJSON //202
     } else {
         return message.ERROR_NOT_FOUND //404

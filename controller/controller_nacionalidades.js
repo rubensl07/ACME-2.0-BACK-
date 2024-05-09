@@ -12,9 +12,9 @@ const setInserirNovaNacionalidade = async function (dadosNacionalidade, contentT
             let id = await DAO.pegarUltimoId()
             if(novaNacionalidade && id) {
                 novaNacionalidadeJSON.nacionalidade = dadosNacionalidade
-                novaNacionalidadeJSON.status = message.SUCESS_CREATED_ITEM.status
-                novaNacionalidadeJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novaNacionalidadeJSON.message = message.SUCESS_CREATED_ITEM.message
+                novaNacionalidadeJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novaNacionalidadeJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novaNacionalidadeJSON.message = message.SUCCESS_CREATED_ITEM.message
                 novaNacionalidadeJSON.id = 'ID adicionado: '+id[0].id
                 return novaNacionalidadeJSON //201
             } else {
@@ -39,9 +39,9 @@ const setAtualizarNacionalidade = async function (id, dadosNacionalidade, conten
                     let novaNacionalidade = await DAO.updateNacionalidade(id, dadosNacionalidade)
                     if(novaNacionalidade) {
                         novaNacionalidadeJSON.nacionalidade = dadosNacionalidade
-                        novaNacionalidadeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novaNacionalidadeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novaNacionalidadeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+                        novaNacionalidadeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novaNacionalidadeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novaNacionalidadeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
                         novaNacionalidadeJSON.id = 'ID editado: '+id
                         return novaNacionalidadeJSON //201
                     } else {
@@ -56,6 +56,18 @@ const setAtualizarNacionalidade = async function (id, dadosNacionalidade, conten
     }
 }
 
+const setExcluirNacionalidade = async function (id) {
+    let excluirNacionalidadeJSON={}
+    let nacionalidadeExcluida = await DAO.deleteNacionalidade(id)
+    if(nacionalidadeExcluida){
+        excluirNacionalidadeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirNacionalidadeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirNacionalidadeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+        return excluirNacionalidadeJSON //202
+    } else {
+        return message.ERROR_NOT_FOUND //404
+    }
+}
 const getListarNacionalidades = async function () {
     let nacionalidadesJSON = {};
     let dadosNacionalidades = await DAO.selectAllNacionalidades();
@@ -94,9 +106,103 @@ const getBuscarNacionalidadeId = async function (search) {
 
     }
 }
+const setInserirNacionalidadeAtor = async function (dados,contentType) {
+    try {
+    if (String(contentType).toLowerCase() == 'application/json'){
+    let nacionalidadeAdicionadaJSON = {}
+    if (dados.idAtor == ''|| dados.idAtor == undefined|| dados.idAtor == null||isNaN(dados.idAtor)||
+        dados.idNacionalidade == ''|| dados.idNacionalidade == undefined|| dados.idNacionalidade == null||isNaN(dados.idNacionalidade)
+){
+       return message.ERROR_REQUIRED_FIELDS //400
+    } else {
+            let novaNacionalidadeAdicionada = await DAO.insertNacionalidadeAtor(dados)
+            if(novaNacionalidadeAdicionada) {
+                nacionalidadeAdicionadaJSON.nacionalidade = dados
+                nacionalidadeAdicionadaJSON.status = message.SUCCESS_CREATED_ITEM.status
+                nacionalidadeAdicionadaJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                nacionalidadeAdicionadaJSON.message = message.SUCCESS_CREATED_ITEM.message
+                return nacionalidadeAdicionadaJSON //201
+            } else {
+                return message.ERROR_INTERNAL_SERVER_DB //500
+            }
+    }
+} else {
+    return message.ERROR_CONTENT_TYPE // 415
+}
+    }catch(error){
+        return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
+    }
+}
+const setExcluirNacionalidadeAtor = async function (dadosBody,contentType) {
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let excluirNacionalidadeAtorJSON={}
+        let nacionalidadeExcluida = await DAO.deleteNacionalidadeAtor(dadosBody)
+        if(nacionalidadeExcluida){
+            excluirNacionalidadeAtorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+            excluirNacionalidadeAtorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+            excluirNacionalidadeAtorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+            return excluirNacionalidadeAtorJSON //202
+        } else {
+            return message.ERROR_NOT_FOUND //404
+        }
+    } else {
+        return message.ERROR_CONTENT_TYPE // 415
+    }
+}
+const setInserirNacionalidadeDiretor = async function (dados,contentType) {
+    try {
+    if (String(contentType).toLowerCase() == 'application/json'){
+    let nacionalidadeAdicionadaJSON = {}
+    if (dados.idDiretor == ''|| dados.idDiretor == undefined|| dados.idDiretor == null||isNaN(dados.idDiretor)||
+        dados.idNacionalidade == ''|| dados.idNacionalidade == undefined|| dados.idNacionalidade == null||isNaN(dados.idNacionalidade)
+){
+       return message.ERROR_REQUIRED_FIELDS //400
+    } else {
+            let novaNacionalidadeAdicionada = await DAO.insertNacionalidadeDiretor(dados)
+            if(novaNacionalidadeAdicionada) {
+                nacionalidadeAdicionadaJSON.nacionalidade = dados
+                nacionalidadeAdicionadaJSON.status = message.SUCCESS_CREATED_ITEM.status
+                nacionalidadeAdicionadaJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                nacionalidadeAdicionadaJSON.message = message.SUCCESS_CREATED_ITEM.message
+                return nacionalidadeAdicionadaJSON //201
+            } else {
+                return message.ERROR_INTERNAL_SERVER_DB //500
+            }
+    }
+} else {
+    return message.ERROR_CONTENT_TYPE // 415
+}
+    }catch(error){
+        return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
+    }
+}
+const setExcluirNacionalidadeDiretor = async function (dadosBody,contentType) {
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let excluirNacionalidadeDiretorJSON={}
+        let nacionalidadeExcluida = await DAO.deleteNacionalidadeDiretor(dadosBody)
+        if(nacionalidadeExcluida){
+            excluirNacionalidadeDiretorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+            excluirNacionalidadeDiretorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+            excluirNacionalidadeDiretorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+            return excluirNacionalidadeDiretorJSON //202
+        } else {
+            return message.ERROR_NOT_FOUND //404
+        }
+    } else {
+        return message.ERROR_CONTENT_TYPE // 415
+    }
+}
+
+
+
 module.exports = {
     setInserirNovaNacionalidade,
     setAtualizarNacionalidade,
+    setExcluirNacionalidade,
     getListarNacionalidades,
-    getBuscarNacionalidadeId
+    getBuscarNacionalidadeId,
+    setInserirNacionalidadeAtor,
+    setExcluirNacionalidadeAtor,
+    setInserirNacionalidadeDiretor,
+    setExcluirNacionalidadeDiretor,
 }

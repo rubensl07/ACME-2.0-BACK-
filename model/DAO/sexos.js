@@ -28,7 +28,30 @@ const updateSexo = async function (id, dadosSexo) {
     }
 
 }
+const deleteSexo = async function (search) {
+    try {
+        const diretores = `UPDATE Diretores SET id_sexo = null WHERE id_sexo = ${search}`
+        const atores = `UPDATE Atores SET id_sexo = null WHERE id_sexo = ${search}`
+        const usuarios = `UPDATE Usuarios SET id_sexo = null WHERE id_sexo = ${search}`
+        const apagarSexo = `DELETE FROM Sexos WHERE id = ${search}`;
+        let resultDiretores = await prisma.$executeRawUnsafe(diretores)
+        let resultAtores = await prisma.$executeRawUnsafe(atores)
+        let resultUsuarios = await prisma.$executeRawUnsafe(usuarios)
+        let resultApagarSexo = await prisma.$executeRawUnsafe(apagarSexo)
+        console.log(resultDiretores);
+        console.log(resultAtores);
+        console.log(resultUsuarios);
+        console.log(resultApagarSexo);
 
+        if (resultApagarSexo) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
 
 
 async function pegarUltimoId() {
@@ -58,6 +81,7 @@ const selectByIdSexo = async function (search) {
 module.exports = {
     insertSexo,
     updateSexo,
+    deleteSexo,
     pegarUltimoId,
     selectAllSexos,
     selectByIdSexo,

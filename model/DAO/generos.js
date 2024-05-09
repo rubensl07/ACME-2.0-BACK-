@@ -16,11 +16,11 @@ const insertGenero = async function (dadosGenero) {
 }
 const deleteGenero = async function (search) {
     try {
-        const apagarGenero = ` DELETE FROM Favoritos WHERE id_filme = ${search}`;
-        const sql = `DELETE FROM Filmes WHERE id = ${search}`;
-        let resultApagarFavorito = await prisma.$executeRawUnsafe(apagarFavorito)
-        let result = await prisma.$executeRawUnsafe(sql)
-        if (resultApagarFavorito && result) {
+        const apagarFilmeGenero = `DELETE FROM filme_Genero WHERE id_genero = ${search}`
+        const apagarGenero = `DELETE FROM Generos WHERE id = ${search}`;
+        let resultApagarFilmeGenero = await prisma.$executeRawUnsafe(apagarFilmeGenero)
+        let resultApagarGenero = await prisma.$executeRawUnsafe(apagarGenero)
+        if (resultApagarGenero) {
             return true
         } else {
             return false
@@ -109,6 +109,7 @@ const insertGeneroFilme = async function(dados){
 module.exports = {
     insertGenero,
     updateGenero,
+    deleteGenero,
     pegarUltimoId,
     selectAllGeneros,
     selectByIdGenero,

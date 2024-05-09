@@ -82,9 +82,9 @@ const setInserirNovoFavorito = async function (dadosFavorito, contentType) {
                     let id = await DAO.pegarUltimoId()
                     if (novoFavorito) {
                         novoFavoritoJSON.usuario = dadosFavorito
-                        novoFavoritoJSON.status = message.SUCESS_CREATED_ITEM.status
-                        novoFavoritoJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                        novoFavoritoJSON.message = message.SUCESS_CREATED_ITEM.message
+                        novoFavoritoJSON.status = message.SUCCESS_CREATED_ITEM.status
+                        novoFavoritoJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                        novoFavoritoJSON.message = message.SUCCESS_CREATED_ITEM.message
                         novoFavoritoJSON.id = 'ID adicionado: '+id[0].id
 
                         return novoFavoritoJSON //201

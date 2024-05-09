@@ -28,8 +28,23 @@ const updateDiretor = async function (id, dadosDiretor) {
     }
 
 }
-
-
+const deleteDiretor = async function (search) {
+    try {
+        const filmes = `delete from diretor_filme where id_diretor = ${search}`
+        const nacionalidades = `delete from diretor_nacionalidade where id_diretor = ${search}`
+        const diretor = `delete from diretores where id = ${search}`
+        let resultApagarFilmes = await prisma.$executeRawUnsafe(filmes)
+        let resultApagarNacionalidade = await prisma.$executeRawUnsafe(nacionalidades)
+        let resultApagarDiretor = await prisma.$executeRawUnsafe(diretor)
+        if (resultApagarDiretor) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
 
 async function pegarUltimoId() {
     const sql = `SELECT cast(last_insert_id() AS DECIMAL) AS id FROM Diretores LIMIT 1;`
@@ -45,6 +60,16 @@ const selectAllDiretores = async function () {
         return false
     }
 }
+const selectAllDiretoresSort = async function (sort) {
+    try {
+        const sql = `select * from Diretores ORDER BY ${sort}`;
+        let results = await prisma.$queryRawUnsafe(sql);
+        return results;
+    } catch (error) {
+        return false
+    }
+}
+
 const selectByIdDiretor = async function (search) {
     try {
         const sql = `SELECT * FROM Diretores WHERE id = ${search}`;
@@ -68,8 +93,10 @@ const selectByIdFilme = async function (search) {
 module.exports = {
     insertDiretor,
     updateDiretor,
+    deleteDiretor,
     pegarUltimoId,
     selectAllDiretores,
+    selectAllDiretoresSort,
     selectByIdDiretor,
     selectByIdFilme,
 }

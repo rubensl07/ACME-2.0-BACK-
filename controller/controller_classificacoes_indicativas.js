@@ -15,9 +15,9 @@ const setInserirNovaClassificacaoIndicativa = async function (dadosClassificacao
             let id = await DAO.pegarUltimoId()
             if(novaClassificacaoIndicativa && id) {
                 novaClassificacaoIndicativaJSON.classificacaoIndicativa = dadosClassificacaoIndicativa
-                novaClassificacaoIndicativaJSON.status = message.SUCESS_CREATED_ITEM.status
-                novaClassificacaoIndicativaJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novaClassificacaoIndicativaJSON.message = message.SUCESS_CREATED_ITEM.message
+                novaClassificacaoIndicativaJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novaClassificacaoIndicativaJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novaClassificacaoIndicativaJSON.message = message.SUCCESS_CREATED_ITEM.message
                 novaClassificacaoIndicativaJSON.id = 'ID adicionado: '+id[0].id
                 return novaClassificacaoIndicativaJSON //201
             } else {
@@ -45,9 +45,9 @@ const setAtualizarClassificacaoIndicativa = async function (id, dadosClassificac
                     let novaClassificacaoIndicativa = await DAO.updateClassificacaoIndicativa(id, dadosClassificacaoIndicativa)
                     if(novaClassificacaoIndicativa) {
                         novaClassificacaoIndicativaJSON.classificacaoIndicativa = dadosClassificacaoIndicativa
-                        novaClassificacaoIndicativaJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novaClassificacaoIndicativaJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novaClassificacaoIndicativaJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+                        novaClassificacaoIndicativaJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novaClassificacaoIndicativaJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novaClassificacaoIndicativaJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
                         novaClassificacaoIndicativaJSON.id = 'ID editado: '+id
                         return novaClassificacaoIndicativaJSON //201
                     } else {
@@ -62,12 +62,26 @@ const setAtualizarClassificacaoIndicativa = async function (id, dadosClassificac
     }
 }
 
-const getListarClassificoesIndicativas = async function () {
+const setExcluirClassificacaoIndicativa = async function (id) {
+    let excluirClassificacaoIndicativaJSON={}
+    let classificacaoIndicativaExcluida = await DAO.deleteClassificacaoIndicativa(id)
+    if(classificacaoIndicativaExcluida){
+        excluirClassificacaoIndicativaJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirClassificacaoIndicativaJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirClassificacaoIndicativaJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+        return excluirClassificacaoIndicativaJSON //202
+    } else {
+        return message.ERROR_NOT_FOUND //404
+    }
+}
+
+
+const getListarclassificacoesIndicativas = async function () {
     let classificacoesIndicativasJSON = {};
     let dadosClassificacoesIndicativas = await DAO.selectAllClassificacoesIndicativas();
         if (dadosClassificacoesIndicativas) {
         if(dadosClassificacoesIndicativas.length > 0) {
-            classificacoesIndicativasJSON.classificoesIndicativas = dadosClassificacoesIndicativas;
+            classificacoesIndicativasJSON.classificacoesIndicativas = dadosClassificacoesIndicativas;
             classificacoesIndicativasJSON.quantidade = dadosClassificacoesIndicativas.length;
             classificacoesIndicativasJSON.status_code = 200;
             return classificacoesIndicativasJSON;
@@ -87,7 +101,7 @@ const getBuscarClassificacaoIndicativaId = async function (search) {
         let dadosClassificacaoIndicativa = await DAO.selectByIdClassificacaoIndicativa(search);
         if (dadosClassificacaoIndicativa) {
             if (dadosClassificacaoIndicativa.length > 0) {
-                ClassificacaoIndicativaJSON.classificacoesIndicativas = dadosClassificacaoIndicativa;
+                ClassificacaoIndicativaJSON.classificacaoIndicativa = dadosClassificacaoIndicativa;
                 ClassificacaoIndicativaJSON.status_code = 200;
                 return ClassificacaoIndicativaJSON;
             } else {
@@ -102,6 +116,7 @@ const getBuscarClassificacaoIndicativaId = async function (search) {
 module.exports = {
     setInserirNovaClassificacaoIndicativa,
     setAtualizarClassificacaoIndicativa,
-    getListarClassificoesIndicativas,
+    setExcluirClassificacaoIndicativa,
+    getListarclassificacoesIndicativas,
     getBuscarClassificacaoIndicativaId
 }

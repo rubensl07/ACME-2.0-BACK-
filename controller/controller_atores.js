@@ -19,10 +19,10 @@ const setInserirnovoAtor = async function (dadosAtor, contentType) {
             let id = await DAO.pegarUltimoId()
             if(novoAtor && id) {
                 novoAtorJSON.ator = dadosAtor
-                novoAtorJSON.status = message.SUCESS_CREATED_ITEM.status
-                novoAtorJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novoAtorJSON.message = message.SUCESS_CREATED_ITEM.message
-                novoAtorJSON.id = 'ID adicionado: '+id[0].id
+                novoAtorJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novoAtorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novoAtorJSON.message = message.SUCCESS_CREATED_ITEM.message
+                novoAtorJSON.id = id[0].id
                 return novoAtorJSON //201
             } else {
                 return message.ERROR_INTERNAL_SERVER_DB //500
@@ -50,10 +50,10 @@ const setAtualizarAtor = async function (id, dadosAtor, contentType) {
                     let novoAtor = await DAO.updateAtor(id, dadosAtor)
                     if(novoAtor) {
                         novoAtorJSON.ator = dadosAtor
-                        novoAtorJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novoAtorJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novoAtorJSON.message = message.SUCESS_ACCEPTED_ITEM.message
-                        novoAtorJSON.id = 'ID editado: '+id
+                        novoAtorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novoAtorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novoAtorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+                        novoAtorJSON.id = id
                         return novoAtorJSON //201
                     } else {
                         return message.ERROR_NOT_FOUND //404
@@ -66,6 +66,19 @@ const setAtualizarAtor = async function (id, dadosAtor, contentType) {
         return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
     }
 }
+const setExcluirAtor = async function (id) {
+    let excluirAtorJSON={}
+    let AtorExcluido = await DAO.deleteAtor(id)
+    if(AtorExcluido){
+        excluirAtorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirAtorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirAtorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+        return excluirAtorJSON //202
+    } else {
+        return message.ERROR_NOT_FOUND //404
+    }
+}
+
 const getListarAtores = async function () {
     let dadosAtores = await DAO.selectAllAtores();
     const dadosSexos = await sexosDAO.selectAllSexos();
@@ -78,17 +91,23 @@ const getListarAtores = async function () {
                 const dadosNacionalidadesAtor = await nacionalidadesDAO.selectAllNacionalidadesAtor(ator.id)
                 let nacionalidade = []
                 dadosNacionalidadesAtor.forEach(nacionalidadeAtor => {
-                    nacionalidade.push(nacionalidadeAtor.pais)
+                    const nacionalidadeJSON = {
+                        id: nacionalidadeAtor.id,
+                        pais: nacionalidadeAtor.pais
+                    } 
+                    nacionalidade.push(nacionalidadeJSON)
                 });
                 ator.nacionalidade = nacionalidade
                 const idSexo = ator.id_sexo
 
+                let sexoJSON = {}
                 dadosSexos.forEach(sexo => {
                     if(idSexo==sexo.id){
-                        ator.sexo = sexo
-                        delete ator.id_sexo
+                        sexoJSON = sexo
                     }
                 })
+                ator.sexo = sexoJSON
+                delete ator.id_sexo
             }
             atoresJSON.Atores = dadosAtores;
             atoresJSON.quantidade = dadosAtores.length;
@@ -101,6 +120,39 @@ const getListarAtores = async function () {
         return message.ERROR_INTERNAL_SERVER_DB //500
     }
 }
+
+const getListarAtoresSort = async function (sort) {
+    let dadosAtores = await DAO.selectAllAtoresSort(sort);
+    const dadosSexos = await sexosDAO.selectAllSexos();
+
+    let atoresJSON = {};
+
+        //Validação para verificar se existem dados de retorno
+        if (dadosAtores) {
+        if(dadosAtores.length > 0) {
+            for (let index = 0; index < dadosAtores.length; index++) {
+            let sexoJSON = {}
+            dadosSexos.forEach(sexo => {
+                if(dadosAtores[index].id_sexo==sexo.id){
+                    sexoJSON = sexo
+                }
+            })
+            dadosAtores[index].sexo = sexoJSON
+            delete dadosAtores[index].id_sexo
+        }
+            //Se devolveu, cria o JSON para retornar para o app
+            atoresJSON.atores = dadosAtores;
+            atoresJSON.quantidade = dadosAtores.length;
+            atoresJSON.status_code = 200;
+            return atoresJSON;
+        } else {
+            return message.ERROR_NOT_FOUND //404
+        }
+    } else {
+        return message.ERROR_INTERNAL_SERVER_DB //500
+    }
+}
+
 const getBuscarAtorId = async function (search) {
     let dadosAtor = await DAO.selectByIdAtor(search);
     const dadosSexos = await sexosDAO.selectAllSexos();
@@ -115,17 +167,23 @@ const getBuscarAtorId = async function (search) {
                     const dadosNacionalidadesAtor = await nacionalidadesDAO.selectAllNacionalidadesAtor(ator.id)
                     let nacionalidade = []
                     dadosNacionalidadesAtor.forEach(nacionalidadeAtor => {
-                        nacionalidade.push(nacionalidadeAtor.pais)
+                        const nacionalidadeJSON = {
+                            id: nacionalidadeAtor.id,
+                            pais: nacionalidadeAtor.pais
+                        } 
+                        nacionalidade.push(nacionalidadeJSON)
                     });
                     ator.nacionalidade = nacionalidade
                     const idSexo = ator.id_sexo
     
+                    let sexoJSON = {}
                     dadosSexos.forEach(sexo => {
                         if(idSexo==sexo.id){
-                            ator.sexo = sexo
-                            delete ator.id_sexo
+                            sexoJSON = sexo
                         }
                     })
+                    ator.sexo = sexoJSON
+                    delete ator.id_sexo
                 atorJSON.ator = dadosAtor;
                 atorJSON.status_code = 200;
                 return atorJSON;
@@ -160,10 +218,14 @@ const getExibirAtoresFilme = async function(search){
     }
 }
 
+
+
 module.exports = {
     setInserirnovoAtor,
     setAtualizarAtor,
+    setExcluirAtor,
     getListarAtores,
+    getListarAtoresSort,
     getBuscarAtorId,
     getExibirAtoresFilme
 }

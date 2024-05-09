@@ -50,10 +50,10 @@ const setInserirNovoFilme = async function (dadosFilme, contentType) {
             if(novoFilme && id) {
                 //retorno dos dados
                 novoFilmeJSON.filme = dadosFilme
-                novoFilmeJSON.status = message.SUCESS_CREATED_ITEM.status
-                novoFilmeJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novoFilmeJSON.message = message.SUCESS_CREATED_ITEM.message
-                novoFilmeJSON.idAdicionado = +id[0].id
+                novoFilmeJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novoFilmeJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novoFilmeJSON.message = message.SUCCESS_CREATED_ITEM.message
+                novoFilmeJSON.id = +id[0].id
 
                 return novoFilmeJSON //201
             } else {
@@ -75,9 +75,9 @@ const setExcluirFilme = async function (id) {
     let excluirFilmeJSON={}
     let filmeExcluido = await DAO.deleteFilme(id)
     if(filmeExcluido){
-        excluirFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-        excluirFilmeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-        excluirFilmeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+        excluirFilmeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirFilmeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirFilmeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
         return excluirFilmeJSON //202
     } else {
         return message.ERROR_NOT_FOUND //404
@@ -116,10 +116,10 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
                     let novoFilme = await DAO.updateFilme(id, dadosFilme)
                     if(novoFilme) {
                         novoFilmeJSON.filme = dadosFilme
-                        novoFilmeJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novoFilmeJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novoFilmeJSON.message = message.SUCESS_ACCEPTED_ITEM.message
-                        novoFilmeJSON.idEditado = id
+                        novoFilmeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novoFilmeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novoFilmeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+                        novoFilmeJSON.id = id
 
                         return novoFilmeJSON //201
                     } else {
@@ -152,27 +152,26 @@ const getListarFilmes = async function () {
                 dadosClassificacoesIndicativas.forEach(element => {
                     if (element.id == dadosFilmes[index].id_classificacao_indicativa) {
                         classificacaoIndicativaJSON = element
-                        delete dadosFilmes[index].id_classificacao_indicativa
                     }
                 });
-
+                
                 let listaGeneros = []
                 dadosGeneros.forEach(genero=>{
-                   listaGeneros.push(genero)
+                    listaGeneros.push(genero)
                 })
-                console.log(dadosDiretores);
                 let listaDiretores = []
                 dadosDiretores.forEach(diretor =>{
                     listaDiretores.push(diretor)
                 })
                 let listaAtores = []
                 dadosAtores.forEach(ator =>{
-                   listaAtores.push(ator)
+                    listaAtores.push(ator)
                 })
-
+                
                 dadosFilmes[index].generos = listaGeneros
                 dadosFilmes[index].diretores = listaDiretores
                 dadosFilmes[index].atores = listaAtores
+                delete dadosFilmes[index].id_classificacao_indicativa
                  dadosFilmes[index].classificacaoIndicativa = classificacaoIndicativaJSON
             }
 
@@ -230,8 +229,7 @@ const getBuscarFilmeId = async function (search) {
                  dadosClassificacoesIndicativas.forEach(element => {
                      if (element.id == dadosFilme[0].id_classificacao_indicativa) {
                          classificacaoIndicativaJSON = element
-                         delete dadosFilme[0].id_classificacao_indicativa
-                        }
+                    }
                     });
                     let listaGeneros = []
                     dadosGeneros.forEach(genero=>{
@@ -245,7 +243,7 @@ const getBuscarFilmeId = async function (search) {
                  dadosAtores.forEach(ator =>{
                     listaAtores.push(ator)
                  })
-
+                 delete dadosFilme[0].id_classificacao_indicativa
                     dadosFilme[0].classificacaoIndicativa = classificacaoIndicativaJSON
                     dadosFilme[0].generos = listaGeneros
                     dadosFilme[0].diretores = listaDiretores
@@ -270,6 +268,7 @@ const getPesquisarFilme = async function (search) {
     let filmesJSON = {}
 
         let dadosFilme = await DAO.selectPesquisarFilmes(search);
+        console.log(dadosFilme);
 
         if (dadosFilme) {
             if(dadosFilme.length>0){
@@ -299,9 +298,8 @@ const getFiltrarFilmes = async function (filter, contentType) {
             });
             const generosSelecionados = listaGeneros.join(',')
             let search = filter.search
-            let sql = `SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, (SELECT GROUP_CONCAT(Generos.nome SEPARATOR ', ') FROM filme_genero INNER JOIN Generos ON filme_genero.id_genero = Generos.id WHERE filme_genero.id_filme = Filmes.id) AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id 
-            WHERE (Filmes.nome LIKE '%${search}%' OR Filmes.sinopse LIKE '%${search}%') AND (Filmes.id_classificacao_indicativa<=${filter.maxAge}) AND (Filmes.data_lancamento>='0001-01-01' AND Filmes.data_lancamento<='9999-12-31') AND (Generos.id IN (0)) GROUP BY Filmes.id`
-            
+            let sql = `SELECT Filmes.id,Filmes.nome,sinopse,duracao,data_lancamento,data_relancamento,foto_capa,foto_fundo,cor,id_classificacao_indicativa AS classificacao, (SELECT GROUP_CONCAT(Generos.nome SEPARATOR ', ') FROM filme_genero INNER JOIN Generos ON filme_genero.id_genero = Generos.id WHERE filme_genero.id_filme = Filmes.id) AS Genero FROM Filmes LEFT JOIN filme_genero ON Filmes.id = filme_genero.id_filme LEFT JOIN Generos ON filme_genero.id_genero = Generos.id LEFT JOIN ator_filme ON filmes.id = ator_filme.id_filme LEFT JOIN atores ON ator_filme.id_ator = atores.id LEFT JOIN diretor_filme ON filmes.id = diretor_filme.id_filme LEFT JOIN diretores ON diretor_filme.id_diretor = diretores.id WHERE (Filmes.nome LIKE '%${search}%' OR Filmes.sinopse LIKE '%${search}%' OR Atores.nome LIKE '%${search}%' OR Diretores.nome LIKE '%${search}%') AND (Filmes.id_classificacao_indicativa<=${filter.maxAge}) AND (Filmes.data_lancamento>='0001-01-01' AND Filmes.data_lancamento<='9999-12-31') AND (Generos.id IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)) GROUP BY Filmes.id;`
+
             if(listaGeneros.length>0){
                 sql = sql.replace('(0)',`(${generosSelecionados})`)
             }
@@ -312,7 +310,6 @@ const getFiltrarFilmes = async function (filter, contentType) {
                 sql =sql.replace('9999-12-31',`${filter.dataMaxima}`)
             }
 
-            console.log(sql)
             let dadosFilmes = await DAO.selectFilterFilmes(sql);
                 if (dadosFilmes) {
                 if(dadosFilmes.length > 0) {
@@ -374,6 +371,113 @@ const getExibirFilmesAtor = async function(search){
     }
 }
 
+const setAdicionarAtorFilme = async function (dados,contentType) {
+    try {
+    if (String(contentType).toLowerCase() == 'application/json'){
+    let atorAdicionadoJSON = {}
+    if (dados.idFilme == ''|| dados.idFilme == undefined|| dados.idFilme == null||isNaN(dados.idFilme)||
+        dados.idAtor == ''|| dados.idAtor == undefined|| dados.idAtor == null||isNaN(dados.idAtor)
+){
+       return message.ERROR_REQUIRED_FIELDS //400
+    } else {
+            let novoAtorAdicionado = await DAO.adicionarAtorFilme(dados)
+            if(novoAtorAdicionado) {
+                atorAdicionadoJSON.ator = dados
+                atorAdicionadoJSON.status = message.SUCCESS_CREATED_ITEM.status
+                atorAdicionadoJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                atorAdicionadoJSON.message = message.SUCCESS_CREATED_ITEM.message
+                return atorAdicionadoJSON //201
+            } else {
+                return message.ERROR_INTERNAL_SERVER_DB //500
+            }
+    }
+} else {
+    return message.ERROR_CONTENT_TYPE // 415
+}
+    }catch(error){
+        return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
+    }
+}
+const setRemoverAtorFilme = async function (dados,contentType) {
+    try{
+        if (String(contentType).toLowerCase() == 'application/json') {
+            let excluirAtorFilmeJSON={}
+                        if (dados.idFilme == '' || dados.idFilme == undefined || dados.idFilme == null || isNaN(dados.idFilme) ||
+                dados.idAtor == '' || dados.idAtor == undefined || dados.idAtor == null || isNaN(dados.idAtor)) {
+                return message.ERROR_REQUIRED_FIELDS; //400
+            } else {
+            let atorExcluido = await DAO.removerAtorFilme(dados)
+            if(atorExcluido){
+                excluirAtorFilmeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                excluirAtorFilmeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                excluirAtorFilmeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+                return excluirAtorFilmeJSON //202
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        }
+        } else {
+            return message.ERROR_CONTENT_TYPE // 415
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER; //500 - Erro na controller
+    }
+}
+
+const setAdicionarDiretorFilme = async function (dados, contentType) {
+    try {
+        if (String(contentType).toLowerCase() == 'application/json') {
+            let diretorAdicionadoJSON = {};
+            if (dados.idFilme == '' || dados.idFilme == undefined || dados.idFilme == null || isNaN(dados.idFilme) ||
+                dados.idDiretor == '' || dados.idDiretor == undefined || dados.idDiretor == null || isNaN(dados.idDiretor)) {
+                return message.ERROR_REQUIRED_FIELDS; //400
+            } else {
+                let novoDiretorAdicionado = await DAO.adicionarDiretorFilme(dados);
+                if (novoDiretorAdicionado) {
+                    diretorAdicionadoJSON.diretor = dados;
+                    diretorAdicionadoJSON.status = message.SUCCESS_CREATED_ITEM.status;
+                    diretorAdicionadoJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code;
+                    diretorAdicionadoJSON.message = message.SUCCESS_CREATED_ITEM.message;
+                    return diretorAdicionadoJSON; //201
+                } else {
+                    return message.ERROR_INTERNAL_SERVER_DB; //500
+                }
+            }
+        } else {
+            return message.ERROR_CONTENT_TYPE; // 415
+        }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER; //500 - Erro na controller
+    }
+};
+
+const setRemoverDiretorFilme = async function (dados, contentType) {
+    try{
+        if (String(contentType).toLowerCase() == 'application/json') {
+            let excluirDiretorFilmeJSON = {};
+            if (dados.idFilme == '' || dados.idFilme == undefined || dados.idFilme == null || isNaN(dados.idFilme) ||
+                dados.idDiretor == '' || dados.idDiretor == undefined || dados.idDiretor == null || isNaN(dados.idDiretor)) {
+                return message.ERROR_REQUIRED_FIELDS; //400
+            } else {
+            let diretorExcluido = await DAO.removerDiretorFilme(dados);
+            if (diretorExcluido) {
+                excluirDiretorFilmeJSON.status = message.SUCCESS_ACCEPTED_ITEM.status;
+                excluirDiretorFilmeJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code;
+                excluirDiretorFilmeJSON.message = message.SUCCESS_ACCEPTED_ITEM.message;
+                return excluirDiretorFilmeJSON; //202
+            } else {
+                return message.ERROR_NOT_FOUND; //404
+            }
+        }
+        } else {
+            return message.ERROR_CONTENT_TYPE; // 415
+        }
+    } catch(error){
+        return message.ERROR_INTERNAL_SERVER; //500 - Erro na controller
+    }
+};
+
+
 module.exports = {
     setInserirNovoFilme,
     setExcluirFilme,
@@ -384,5 +488,9 @@ module.exports = {
     getFiltrarFilmes,
     getListarFilmesSort,
     getExibirFilmesDiretor,
-    getExibirFilmesAtor
+    getExibirFilmesAtor,
+    setAdicionarAtorFilme,
+    setRemoverAtorFilme,
+    setAdicionarDiretorFilme,
+    setRemoverDiretorFilme
 }

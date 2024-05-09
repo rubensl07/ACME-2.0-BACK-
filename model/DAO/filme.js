@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-var coringa = "|"
-
+var caractereSubstituidoOld = "'"
+var caractereSubstituidoNew = "|"
 const insertFilme = async function (dadosFilme) {
     let sql
     try {
@@ -21,8 +21,8 @@ const insertFilme = async function (dadosFilme) {
                         cor,
                         id_classificacao_indicativa
                     ) values (
-  REPLACE ('${dadosFilme.nome}',"'","${coringa}"),
-  REPLACE ("${dadosFilme.sinopse}","'","${coringa}"),
+  REPLACE ("${dadosFilme.nome}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
+  REPLACE ("${dadosFilme.sinopse}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
   '${dadosFilme.duracao}',
   '${dadosFilme.data_lancamento}',
   '${dadosFilme.data_relancamento}',
@@ -43,8 +43,8 @@ const insertFilme = async function (dadosFilme) {
                    cor,
                    id_classificacao_indicativa
 ) values (
-    REPLACE ('${dadosFilme.nome}',"'","${coringa}"),
-    REPLACE ("${dadosFilme.sinopse}","'","${coringa}"),
+    REPLACE ("${dadosFilme.nome}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
+    REPLACE ("${dadosFilme.sinopse}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
 '${dadosFilme.duracao}',
 '${dadosFilme.data_lancamento}',
 null,
@@ -69,12 +69,19 @@ null,
 }
 const deleteFilme = async function (search) {
     try {
-        const apagarFavorito = ` DELETE FROM Favoritos WHERE id_filme = ${search}`;
-        const sql = `DELETE FROM Filmes WHERE id = ${search}`;
-        console.log(sql);
-        let resultApagarFavorito = await prisma.$executeRawUnsafe(apagarFavorito)
-        let resultApagarFilme = await prisma.$executeRawUnsafe(sql)
-        if (resultApagarFavorito && resultApagarFilme) {
+        const apagarDiretorFilme = `DELETE from diretor_filme where id_filme = ${search}`;
+        const apagarAtorFilme = `DELETE from ator_filme where id_filme = ${search}`;
+        const apagarGenerosFilme = `DELETE from filme_genero where id_filme = ${search}`;
+        const apagarFavoritos = `DELETE from Favoritos WHERE id_filme = ${search}`
+        const apagarFilme = `DELETE FROM Filmes WHERE id = ${search}`;
+
+        const resultApagarDiretores = await prisma.$executeRawUnsafe(apagarDiretorFilme)
+        const resultApagarAtores = await prisma.$executeRawUnsafe(apagarAtorFilme)
+        const resultApagarGeneros = await prisma.$executeRawUnsafe(apagarGenerosFilme)
+        const resultApagarFavoritos = await prisma.$executeRawUnsafe(apagarFavoritos)
+        const resultApagarFilme = await prisma.$executeRawUnsafe(apagarFilme)
+
+        if (resultApagarFilme) {
             return true
         } else {
             return false
@@ -92,8 +99,8 @@ const updateFilme = async function (id, dadosFilme) {
         dadosFilme.data_relancamento != undefined
     ) {
             sql = `UPDATE Filmes SET 
-            nome = "${dadosFilme.nome}",
-            sinopse = "${dadosFilme.sinopse}",
+            nome = replace("${dadosFilme.nome}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
+            sinopse = replace("${dadosFilme.sinopse}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
             duracao = '${dadosFilme.duracao}',
             data_lancamento = '${dadosFilme.data_lancamento}',
             data_relancamento = '${dadosFilme.data_relancamento}',
@@ -104,8 +111,8 @@ const updateFilme = async function (id, dadosFilme) {
             WHERE id = ${id}`
     } else {
         sql = `UPDATE Filmes SET 
-        nome = "${dadosFilme.nome}",
-        sinopse = "${dadosFilme.sinopse}",
+        nome = replace("${dadosFilme.nome}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
+        sinopse = replace("${dadosFilme.sinopse}","${caractereSubstituidoOld}","${caractereSubstituidoNew}"),
         duracao = '${dadosFilme.duracao}',
         data_lancamento = '${dadosFilme.data_lancamento}',
         foto_capa = '${dadosFilme.foto_capa}',
@@ -114,6 +121,7 @@ const updateFilme = async function (id, dadosFilme) {
         id_classificacao_indicativa = '${dadosFilme.classificacao}'
         WHERE id = ${id}`
     }
+    console.log(sql);
         let result = await prisma.$executeRawUnsafe(sql)
         if(result) {
             return true
@@ -135,7 +143,7 @@ async function pegarUltimoId() {
 
 const selectAllFilmes = async function () {
     try {
-        const sql = `select * from Filmes`;
+        const sql = `SELECT id, replace(nome,"${caractereSubstituidoNew}","'") as nome,replace(sinopse,"${caractereSubstituidoNew}","'") as sinopse, duracao, data_lancamento, data_relancamento, foto_capa, foto_fundo,cor,id_classificacao_indicativa FROM Filmes`;
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
         return rsFilmes;
     } catch (error) {
@@ -146,7 +154,7 @@ const selectAllFilmes = async function () {
 
 const selectAllFilmesSort = async function (sort) {
     try {
-        const sql = `select * from Filmes ORDER BY ${sort}`;
+        const sql = `SELECT id, replace(nome,"${caractereSubstituidoNew}","'") as nome,replace(sinopse,"${caractereSubstituidoNew}","'") as sinopse, duracao, data_lancamento, data_relancamento, foto_capa, foto_fundo,cor,id_classificacao_indicativa FROM Filmes ORDER BY ${sort}`;
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
         return rsFilmes;
     } catch (error) {
@@ -157,8 +165,7 @@ const selectAllFilmesSort = async function (sort) {
 
 const selectByIdFilme = async function (search) {
     try {
-        const sql = `SELECT * From Filmes WHERE id = ${search}`;
-        // const sql = `SELECT * FROM Filmes WHERE id = ${search}`;
+        const sql = `SELECT id, replace(nome,"${caractereSubstituidoNew}","'") as nome,replace(sinopse,"${caractereSubstituidoNew}","'") as sinopse, duracao, data_lancamento, data_relancamento, foto_capa, foto_fundo,cor,id_classificacao_indicativa FROM Filmes WHERE id = ${search}`;
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
         return rsFilmes
     } catch (error) {
@@ -168,7 +175,19 @@ const selectByIdFilme = async function (search) {
 
 const selectPesquisarFilmes = async function (search) {
     try {
-        const sql = `SELECT * FROM Filmes WHERE nome LIKE '%${search}%' OR sinopse LIKE '%${search}%'`;
+        const sql = `SELECT filmes.id, filmes.nome, filmes.foto_capa, filmes.cor, filmes.sinopse 
+        FROM filmes 
+        LEFT JOIN ator_filme ON filmes.id = ator_filme.id_filme 
+        LEFT JOIN atores ON ator_filme.id_ator = atores.id 
+        LEFT JOIN diretor_filme ON filmes.id = diretor_filme.id_filme 
+        LEFT JOIN diretores ON diretor_filme.id_diretor = diretores.id 
+        WHERE filmes.nome LIKE '%${search}%' 
+           OR filmes.sinopse LIKE '%${search}%' 
+           OR atores.nome LIKE '%${search}%' 
+           OR diretores.nome LIKE '%${search}%' 
+        GROUP BY filmes.id, filmes.nome, filmes.foto_capa, filmes.cor, filmes.sinopse;`
+
+        console.log(sql);
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
         return rsFilmes
     } catch (error) {
@@ -202,6 +221,63 @@ const selectByIdAtor = async function (search) {
         return false
     }
 }
+const adicionarAtorFilme = async function(dados){
+    try {
+        const sql = ` INSERT INTO ator_filme(id_filme,id_ator)VALUES(${dados.idFilme},${dados.idAtor})`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
+const removerAtorFilme = async function (dadosBody) {
+    try {
+        const sql = ` DELETE From ator_filme WHERE ator_filme.id_filme = ${dadosBody.idFilme} AND ator_filme.id_ator = ${dadosBody.idAtor}`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
+const adicionarDiretorFilme = async function(dados){
+    try {
+        const sql = `INSERT INTO diretor_filme (id_filme, id_diretor) VALUES (${dados.idFilme}, ${dados.idDiretor})`;
+        let result = await prisma.$executeRawUnsafe(sql);
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        return false;
+    }
+};
+
+
+const removerDiretorFilme = async function (dadosBody) {
+    try {
+        const sql = `DELETE FROM diretor_filme WHERE diretor_filme.id_filme = ${dadosBody.idFilme} AND diretor_filme.id_diretor = ${dadosBody.idDiretor}`;
+        let result = await prisma.$executeRawUnsafe(sql);
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        return false;
+    }
+};
+
 
 module.exports = {
  insertFilme,
@@ -214,5 +290,9 @@ module.exports = {
  selectFilterFilmes,
  selectAllFilmesSort,
  selectByIdDiretor,
- selectByIdAtor
+ selectByIdAtor,
+ adicionarAtorFilme,
+ removerAtorFilme,
+ adicionarDiretorFilme,
+ removerDiretorFilme
 }

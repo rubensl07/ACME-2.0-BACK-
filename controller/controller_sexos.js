@@ -14,9 +14,9 @@ const setInserirNovoSexo = async function (dadosSexo, contentType) {
             let id = await DAO.pegarUltimoId()
             if(novoSexo && id) {
                 novoSexoJSON.sexo = dadosSexo
-                novoSexoJSON.status = message.SUCESS_CREATED_ITEM.status
-                novoSexoJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novoSexoJSON.message = message.SUCESS_CREATED_ITEM.message
+                novoSexoJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novoSexoJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novoSexoJSON.message = message.SUCCESS_CREATED_ITEM.message
                 novoSexoJSON.id = 'ID adicionado: '+id[0].id
                 return novoSexoJSON //201
             } else {
@@ -43,9 +43,9 @@ const setAtualizarSexo = async function (id, dadosSexo, contentType) {
                     let novoSexo = await DAO.updateSexo(id, dadosSexo)
                     if(novoSexo) {
                         novoSexoJSON.sexo = dadosSexo
-                        novoSexoJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novoSexoJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novoSexoJSON.message = message.SUCESS_ACCEPTED_ITEM.message
+                        novoSexoJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novoSexoJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novoSexoJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
                         novoSexoJSON.id = 'ID editado: '+id
                         return novoSexoJSON //201
                     } else {
@@ -59,12 +59,27 @@ const setAtualizarSexo = async function (id, dadosSexo, contentType) {
         return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
     }
 }
+
+const setExcluirSexo = async function (id) {
+    let excluirSexoJSON={}
+    let sexoExcluido = await DAO.deleteSexo(id)
+    if(sexoExcluido){
+        excluirSexoJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirSexoJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirSexoJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+        return excluirSexoJSON //202
+    } else {
+        return message.ERROR_NOT_FOUND //404
+    }
+}
+
+
 const getListarSexos = async function () {
     let sexosJSON = {};
     let dadosSexos = await DAO.selectAllSexos();
         if (dadosSexos) {
         if(dadosSexos.length > 0) {
-            sexosJSON.classificoesIndicativas = dadosSexos;
+            sexosJSON.sexos = dadosSexos;
             sexosJSON.quantidade = dadosSexos.length;
             sexosJSON.status_code = 200;
             return sexosJSON;
@@ -99,6 +114,7 @@ const getBuscarSexoId = async function (search) {
 module.exports = {
     setInserirNovoSexo,
     setAtualizarSexo,
+    setExcluirSexo,
     getListarSexos,
     getBuscarSexoId
 }

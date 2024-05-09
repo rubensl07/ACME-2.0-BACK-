@@ -19,10 +19,10 @@ const setInserirNovoDiretor = async function (dadosDiretor, contentType) {
             let id = await DAO.pegarUltimoId()
             if(novoDiretor && id) {
                 novoDiretorJSON.diretor = dadosDiretor
-                novoDiretorJSON.status = message.SUCESS_CREATED_ITEM.status
-                novoDiretorJSON.status_code = message.SUCESS_CREATED_ITEM.status_code
-                novoDiretorJSON.message = message.SUCESS_CREATED_ITEM.message
-                novoDiretorJSON.id = 'ID adicionado: '+id[0].id
+                novoDiretorJSON.status = message.SUCCESS_CREATED_ITEM.status
+                novoDiretorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                novoDiretorJSON.message = message.SUCCESS_CREATED_ITEM.message
+                novoDiretorJSON.id = id[0].id
                 return novoDiretorJSON //201
             } else {
                 return message.ERROR_INTERNAL_SERVER_DB //500
@@ -50,10 +50,10 @@ const setAtualizarDiretor = async function (id, dadosDiretor, contentType) {
                     let novoDiretor = await DAO.updateDiretor(id, dadosDiretor)
                     if(novoDiretor) {
                         novoDiretorJSON.diretor = dadosDiretor
-                        novoDiretorJSON.status = message.SUCESS_ACCEPTED_ITEM.status
-                        novoDiretorJSON.status_code = message.SUCESS_ACCEPTED_ITEM.status_code
-                        novoDiretorJSON.message = message.SUCESS_ACCEPTED_ITEM.message
-                        novoDiretorJSON.id = 'ID editado: '+id
+                        novoDiretorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+                        novoDiretorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+                        novoDiretorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+                        novoDiretorJSON.id = id
                         return novoDiretorJSON //201
                     } else {
                         return message.ERROR_NOT_FOUND //404
@@ -64,6 +64,18 @@ const setAtualizarDiretor = async function (id, dadosDiretor, contentType) {
         }
     } catch (error){
         return message.ERROR_INTERNAL_SERVER //500 - Erro na controller
+    }
+}
+const setExcluirDiretor = async function (id) {
+    let excluirDiretorJSON={}
+    let DiretorExcluido = await DAO.deleteDiretor(id)
+    if(DiretorExcluido){
+        excluirDiretorJSON.status = message.SUCCESS_ACCEPTED_ITEM.status
+        excluirDiretorJSON.status_code = message.SUCCESS_ACCEPTED_ITEM.status_code
+        excluirDiretorJSON.message = message.SUCCESS_ACCEPTED_ITEM.message
+        return excluirDiretorJSON //202
+    } else {
+        return message.ERROR_NOT_FOUND //404
     }
 }
 const getListarDiretores = async function () {
@@ -78,17 +90,23 @@ const getListarDiretores = async function () {
                 const dadosNacionalidadesDiretor = await nacionalidadesDAO.selectAllNacionalidadesDiretor(diretor.id)
                 let nacionalidade = []
                 dadosNacionalidadesDiretor.forEach(nacionalidadeDiretor => {
-                    nacionalidade.push(nacionalidadeDiretor.pais)
+                    const nacionalidadeJSON = {
+                        id: nacionalidadeDiretor.id,
+                        pais: nacionalidadeDiretor.pais
+                    } 
+                    nacionalidade.push(nacionalidadeJSON)
                 });
                 diretor.nacionalidade = nacionalidade
                 const idSexo = diretor.id_sexo
 
+                let sexoJSON = {}
                 dadosSexos.forEach(sexo => {
                     if(idSexo==sexo.id){
-                        diretor.sexo = sexo
-                        delete diretor.id_sexo
+                        sexoJSON = sexo
                     }
                 })
+                diretor.sexo = sexoJSON
+                delete diretor.id_sexo
             }
             diretoresJSON.diretores = dadosDiretores;
             diretoresJSON.quantidade = dadosDiretores.length;
@@ -101,6 +119,42 @@ const getListarDiretores = async function () {
         return message.ERROR_INTERNAL_SERVER_DB //500
     }
 }
+
+const getListarDiretoresSort = async function (sort) {
+    let dadosDiretores = await DAO.selectAllDiretoresSort(sort);
+    const dadosSexos = await sexosDAO.selectAllSexos();
+
+    let diretoresJSON = {};
+
+        if (dadosDiretores) {
+        if(dadosDiretores.length > 0) {
+            for (let index = 0; index < dadosDiretores.length; index++) {
+                const diretor = dadosDiretores[index]
+                const idSexo = diretor.id_sexo
+
+                let sexoJSON = {}
+                dadosSexos.forEach(sexo => {
+                    if(idSexo==sexo.id){
+                        sexoJSON = sexo
+                    }
+                })
+                diretor.sexo = sexoJSON
+                delete diretor.id_sexo
+
+            }
+            diretoresJSON.diretores = dadosDiretores;
+            diretoresJSON.quantidade = dadosDiretores.length;
+            diretoresJSON.status_code = 200;
+            return diretoresJSON;
+        } else {
+            return message.ERROR_NOT_FOUND //404
+        }
+    } else {
+        return message.ERROR_INTERNAL_SERVER_DB //500
+    }
+}
+
+
 const getBuscarDiretorId = async function (search) {
     let dadosDiretor = await DAO.selectByIdDiretor(search);
     const dadosSexos = await sexosDAO.selectAllSexos();
@@ -115,17 +169,23 @@ const getBuscarDiretorId = async function (search) {
                     const dadosNacionalidadesDiretor = await nacionalidadesDAO.selectAllNacionalidadesDiretor(diretor.id)
                     let nacionalidade = []
                     dadosNacionalidadesDiretor.forEach(nacionalidadeDiretor => {
-                        nacionalidade.push(nacionalidadeDiretor.pais)
+                        const nacionalidadeJSON = {
+                            id: nacionalidadeDiretor.id,
+                            pais: nacionalidadeDiretor.pais
+                        } 
+                        nacionalidade.push(nacionalidadeJSON)
                     });
                     diretor.nacionalidade = nacionalidade
                     const idSexo = diretor.id_sexo
     
+                    let sexoJSON = {}
                     dadosSexos.forEach(sexo => {
                         if(idSexo==sexo.id){
-                            diretor.sexo = sexo
-                            delete diretor.id_sexo
+                            sexoJSON = sexo
                         }
                     })
+                    diretor.sexo = sexoJSON
+                    delete diretor.id_sexo
                 diretorJSON.diretor = dadosDiretor;
                 diretorJSON.status_code = 200;
                 return diretorJSON;
@@ -161,7 +221,9 @@ const getExibirDiretoresFilme = async function(search){
 module.exports = {
     setInserirNovoDiretor,
     setAtualizarDiretor,
+    setExcluirDiretor,
     getListarDiretores,
+    getListarDiretoresSort,
     getBuscarDiretorId,
     getExibirDiretoresFilme
 }

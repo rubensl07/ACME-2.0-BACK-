@@ -15,12 +15,12 @@ const ERROR_INTERNAL_SERVER = {status: false, status_code: 500, message: 'Não f
 const ERROR_INTERNAL_SERVER_DB = {status: false, status_code: 500, message: 'Não foi possível processar a requisição devido a um erro no acesso ao Banco de Dados. Contate o administrador da API'}
 
 /************************** MENSAGENS DE SUCESSO ************************************** */
-    const SUCESS_CREATED_ITEM = {status: true, status_code:201,message:'Item criado com sucesso'}
-    const SUCESS_ACCEPTED_ITEM = {status: true, status_code:202,message:'Resposta aceita com sucesso'}
+    const SUCCESS_CREATED_ITEM = {status: true, status_code:201,message:'Item criado com sucesso'}
+    const SUCCESS_ACCEPTED_ITEM = {status: true, status_code:202,message:'Resposta aceita com sucesso'}
 
 module.exports={
-    SUCESS_CREATED_ITEM,
-    SUCESS_ACCEPTED_ITEM,
+    SUCCESS_CREATED_ITEM,
+    SUCCESS_ACCEPTED_ITEM,
     ERROR_INVALID_ID,
     ERROR_REQUIRED_FIELDS,
     ERROR_NOT_FOUND,

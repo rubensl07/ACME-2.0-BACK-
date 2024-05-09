@@ -35,6 +35,22 @@ const updateClassificacaoIndicativa = async function (id, dadosClassificacaoIndi
 
 }
 
+const deleteClassificacaoIndicativa = async function (search) {
+    try {
+        const transferirClassificacao = `UPDATE Filmes SET id_classificacao_indicativa = null WHERE id_classificacao_indicativa = ${search}`
+        const apagarClassificacao = `DELETE FROM Classificacao_Indicativa where id = ${search}`
+        let resultTransferirClassificacao = await prisma.$executeRawUnsafe(transferirClassificacao)
+        let resultApagarClassificacao = await prisma.$executeRawUnsafe(apagarClassificacao)
+        if (resultApagarClassificacao) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 
 
 async function pegarUltimoId() {
@@ -64,6 +80,7 @@ const selectByIdClassificacaoIndicativa = async function (search) {
 module.exports = {
     insertClassificacaoIndicativa,
     updateClassificacaoIndicativa,
+    deleteClassificacaoIndicativa,
     pegarUltimoId,
     selectAllClassificacoesIndicativas,
     selectByIdClassificacaoIndicativa,

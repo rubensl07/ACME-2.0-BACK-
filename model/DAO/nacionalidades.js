@@ -28,6 +28,23 @@ const updateNacionalidade = async function (id, dadosNacionalidade) {
     }
 }
 
+const deleteNacionalidade = async function (search) {
+    try {
+        const apagarDiretoresNacionalidade = `DELETE FROM diretor_Nacionalidade where id_nacionalidade = ${search}`
+        const apagarAtoresNacionalidade = `DELETE FROM ator_Nacionalidade where id_nacionalidade = ${search}`
+        const apagarNacionalidade = `DELETE FROM Nacionalidades where id = ${search}`;
+        let resultApagarDiretor = await prisma.$executeRawUnsafe(apagarDiretoresNacionalidade)
+        let resultApagarAtor = await prisma.$executeRawUnsafe(apagarAtoresNacionalidade)
+        let resultApagarNacionalidade = await prisma.$executeRawUnsafe(apagarNacionalidade)
+        if (resultApagarNacionalidade) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
 
 
 async function pegarUltimoId() {
@@ -72,12 +89,70 @@ const selectAllNacionalidadesDiretor = async function (idDiretor) {
     }
 }
 
+const insertNacionalidadeAtor = async function(dados){
+    try {
+        const sql = `INSERT INTO ator_nacionalidade(id_ator,id_nacionalidade)VALUES(${dados.idAtor},${dados.idNacionalidade})`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+const deleteNacionalidadeAtor = async function (dadosBody) {
+    try {
+        const sql = ` DELETE From ator_nacionalidade WHERE ator_nacionalidade.id_ator = ${dadosBody.idAtor} AND ator_nacionalidade.id_nacionalidade = ${dadosBody.idNacionalidade}`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+const insertNacionalidadeDiretor = async function(dados){
+    try {
+        const sql = `INSERT INTO diretor_nacionalidade(id_diretor,id_nacionalidade)VALUES(${dados.idDiretor},${dados.idNacionalidade})`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+const deleteNacionalidadeDiretor = async function (dadosBody) {
+    try {
+        const sql = `DELETE From diretor_nacionalidade WHERE diretor_nacionalidade.id_diretor = ${dadosBody.idDiretor} AND diretor_nacionalidade.id_nacionalidade = ${dadosBody.idNacionalidade}`;
+        let result = await prisma.$executeRawUnsafe(sql)
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 module.exports = {
     insertNacionalidade,
     updateNacionalidade,
+    deleteNacionalidade,
     pegarUltimoId,
     selectAllNacionalidades,
     selectByIdNacionalidade,
     selectAllNacionalidadesAtor,
-    selectAllNacionalidadesDiretor
+    selectAllNacionalidadesDiretor,
+    insertNacionalidadeAtor,
+    deleteNacionalidadeAtor,
+    insertNacionalidadeDiretor,
+    deleteNacionalidadeDiretor,
 }
